@@ -6,9 +6,30 @@ There are plenty of Facebook groups that allow the Purdue community to exchange 
 
 
 ### Objectives
+* Build a website for the Purdue community to trade goods and services easily
+* Allow users to search for products by names and keywords like class CRN
+* Allow users to view products filtered by categories
+* Allow sellers to set a starting bid price and/or an immediate selling price
+* Allow users to keep track of products that they have placed bids on
+* Allow users to see other users’ email and/or phone number only after a bid/deal is
+made
+* Allow users to see the most popular items for sale
+* Allow users to rate buyers and/or sellers after they complete the trade
 
 
 ### Stakeholders
+* Developers: Four group members
+* Purdue Students
+* Purdue Faculties
+* Advertisers on our website
 
 
 ### Deliverables
+* A website using ReactJS, Bootstrap, MongoDB, and NodeJS where users can sell and
+buy used textbooks, school supplies, furnitures, clothings, etc.
+* A trading marketplace where users can trade for goods and services easily.
+* A database that can store user information, item information and transaction history.
+* A server that can process a reasonable number of requests simultaneously
+* An easy search and filter tool for Purdue students to look up goods and services. For
+example, items can be filtered by category and textbooks can be filtered by course
+name.
