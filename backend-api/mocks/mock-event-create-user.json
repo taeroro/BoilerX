@@ -1,0 +1,8 @@
+{
+  "body": "{\"email\":\"z@purdue.edu\",\"pass\":\"123456\"}",
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1235"
+    }
+  }
+}

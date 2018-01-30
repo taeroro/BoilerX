@@ -11,15 +11,24 @@
 #
 # Happy Coding!
 
-service: aws-nodejs # NOTE: update this with your service name
+service: boilerx-back # NOTE: update this with your service name
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
 # frameworkVersion: "=X.X.X"
 
+plugins:
+  - serverless-webpack
+
+custom:
+  webpackIncludeModules: true
+
 provider:
   name: aws
   runtime: nodejs6.10
+  stage: dev
+  region: us-east-1
+  role: arn:aws:iam::462630007467:role/boilerx-app-dev-us-east-1-lambdaRole
 
 # you can overwrite defaults here
 #  stage: dev
@@ -54,9 +63,23 @@ provider:
 #    - exclude-me.js
 #    - exclude-me-dir/**
 
+  # Defines an HTTP API endpoint that calls the main function in create.js
+  # path url path is /notes
+  # - method POST request
+  # - cors enabled CORS (Cross-Origin Resource Sharing) for browser cross
+  #     domain api call
+  # - authorizer authenticate using the AWS IAM role
 functions:
-  hello:
-    handler: handler.hello
+  create:
+    handler: app/user/create_user.main
+    events:
+      - http:
+          path: signup
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
