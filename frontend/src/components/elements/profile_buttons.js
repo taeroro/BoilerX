@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom';
 import ReactModal from 'react-modal';
 
 import SignupContent from '../../containers/signup_content';
+import LoginContent from '../../containers/login_content';
 
 class ProfileButtons extends Component {
   constructor () {
     super();
 
-    this.state = { showModal: false };
+    this.state = {
+      showModal: false,
+      buttonName: ''
+     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
@@ -17,12 +21,18 @@ class ProfileButtons extends Component {
     ReactModal.setAppElement('.appContainer');
   }
 
-  handleOpenModal () {
-    this.setState({ showModal: true });
+  handleOpenModal(event) {
+    this.setState({
+      showModal: true,
+      buttonName: event.target.id
+    });
   }
 
-  handleCloseModal () {
-    this.setState({ showModal: false });
+  handleCloseModal() {
+    this.setState({
+      showModal: false,
+      buttonName: ''
+    });
   }
 
   renderWindow() {
@@ -35,8 +45,22 @@ class ProfileButtons extends Component {
         <button
           onClick={this.handleCloseModal}
           className="windowCloseButton"></button>
-        <SignupContent />
+        {this.renderSelector()}
       </ReactModal>
+    );
+  }
+
+  renderSelector() {
+    if (this.state.buttonName == 'bt-signup') {
+      return <SignupContent />;
+    }
+    else if (this.state.buttonName == 'bt-login') {
+      return <LoginContent />;
+    }
+
+    // handle error
+    return (
+      <div>ERROR</div>
     );
   }
 
@@ -44,12 +68,13 @@ class ProfileButtons extends Component {
     return (
       <div className="buttonContainer">
         <button
-          className="nav-item bt-login">
+          onClick={this.handleOpenModal}
+          className="nav-item" id="bt-login">
           Login
         </button>
         <button
           onClick={this.handleOpenModal}
-          className="nav-item bt-signup">
+          className="nav-item" id="bt-signup">
           Sign Up
         </button>
         {this.renderWindow()}
