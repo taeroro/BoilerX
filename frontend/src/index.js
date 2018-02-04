@@ -5,6 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Pormise from 'redux-promise';
 
+// non-packages
 import reducers from './reducers';
 import TopNavBar from './components/elements/top_nav_bar';
 import HomePage from './components/pages/home_page';

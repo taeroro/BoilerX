@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class PopularItems extends Component {
+class PopularItems extends Component {
   render() {
     return (
       <div className="popContainer">
@@ -9,3 +9,5 @@ export default class PopularItems extends Component {
     );
   }
 }
+
+export default PopularItems;

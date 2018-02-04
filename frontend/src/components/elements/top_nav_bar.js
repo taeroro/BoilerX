@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import SearchBar from '../../containers/search_bar';
 import ProfileButtons from './profile_buttons';
 
-export default class TopNavBar extends Component {
+class TopNavBar extends Component {
   render() {
     const logoImgLink = "src/img/BoilerX_logo-01.svg";
 
@@ -23,3 +23,5 @@ export default class TopNavBar extends Component {
     );
   }
 }
+
+export default TopNavBar;

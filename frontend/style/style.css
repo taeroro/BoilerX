@@ -3,6 +3,8 @@
   The numbers indicate elements belongs to:
   0: Top Navigation Bar
   1: Home Page
+  2. Sign Up Window
+  999: Modal
   ========================
 **/
 /* ============================================ */
@@ -46,6 +48,7 @@
   font-weight: 300;
   letter-spacing: 2px;
   color: #767676;
+  z-index: 0 !important;
 }
 
 /* 0. Profile Buttons */
@@ -63,8 +66,9 @@
   color: #4D4D4D !important;
   padding: 10px 30px;
   text-decoration: none !important;
+  border: none;
 }
-.bt-login:hover { text-decoration: none; }
+.bt-login:focus { outline:none; }
 .bt-signup {
   text-transform: uppercase;
   font-family: 'Montserrat', sans-serif;
@@ -78,7 +82,7 @@
   padding: 8px 30px;
   text-decoration: none !important;
 }
-.bt-signup:hover { text-decoration: none; }
+.bt-signup:focus { outline:none; }
 /* ============================================ */
 /* 1. Popular Items */
 .popContainer {
@@ -99,3 +103,55 @@
   width: 100vw;
 }
 /* ============================================ */
+/* 2. SignupWindow */
+.windowCloseButton {
+  width: 22px;
+  height: 22px;
+  background: url(../src/img/close_modal_button.svg);
+  background-repeat: no-repeat;
+  background-size: 22px 22px;
+  border: 0;
+}
+
+/* 2. Sign up submit button */
+.signupSubmitButton {
+  position: absolute;
+  bottom: 45px;
+  width: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 10px 30px;
+  border-radius: 3px;
+  color: #FFF;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  letter-spacing: 2px;
+  background: linear-gradient(to right, #996CFD, #FF6287);
+}
+/* ============================================ */
+/* 999. Modal */
+.Modal {
+  width: 550px;
+  height: 650px;
+  position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+  background-color: #fff;
+  padding: 45px;
+}
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+}
+
+/* Remove all button defualt styles */
+input, button, submit { border: none; }

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // non-packages
 import PopularItems from '../../containers/pop_items';
 
-export default class HomePage extends Component {
+class HomePage extends Component {
   render() {
     const artImgLink = "src/img/homePageArts.svg";
 
@@ -15,3 +15,5 @@ export default class HomePage extends Component {
     );
   }
 }
+
+export default HomePage;
