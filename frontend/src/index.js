@@ -6,7 +6,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Pormise from 'redux-promise';
 
 import reducers from './reducers';
-import HomePage from './components/home_page';
+import TopNavBar from './components/elements/top_nav_bar';
+import HomePage from './components/pages/home_page';
 
 const createStoreWithMiddleware = applyMiddleware(Pormise)(createStore);
 
@@ -15,10 +16,12 @@ ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <BrowserRouter>
       <div>
+        <TopNavBar />
         <Switch>
+          <Route path="/" component={HomePage} />
           <Route path="/" component={HomePage} />
         </Switch>
       </div>
     </BrowserRouter>
   </Provider>
-  , document.querySelector('.container'));
+  , document.querySelector('.appContainer'));

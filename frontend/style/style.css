@@ -1,0 +1,101 @@
+/**
+  ========================
+  The numbers indicate elements belongs to:
+  0: Top Navigation Bar
+  1: Home Page
+  ========================
+**/
+/* ============================================ */
+/* 0. NavBar */
+.navbar {
+  min-height: 80px !important;
+  border-radius: 0 !important;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+}
+.navbar-brand {
+  margin-left: 30px;
+  padding-top: 14px !important;
+  padding-bottom: 14px !important;
+}
+.navbar-brand > span {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  letter-spacing: 5px;
+  color: #4D4D4D;
+  display: inline-block;
+  vertical-align: middle;
+}
+.navbar-brand > img {
+  display: inline-block !important;
+  margin-right: 10px;
+}
+
+/* 0. SearchBar */
+.searchBar-container {
+  margin-left: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.form-control {
+  min-height: 48px !important;
+  width: 45vw !important;
+  border-radius: 3px;
+  border: none !important;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.3);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: #767676;
+}
+
+/* 0. Profile Buttons */
+.buttonContainer {
+  float: right;
+  margin-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.bt-login {
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  letter-spacing: 4px;
+  color: #4D4D4D !important;
+  padding: 10px 30px;
+  text-decoration: none !important;
+}
+.bt-login:hover { text-decoration: none; }
+.bt-signup {
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  letter-spacing: 4px;
+  color: #4D4D4D !important;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #4D4D4D;
+  border-radius: 50px;
+  padding: 8px 30px;
+  text-decoration: none !important;
+}
+.bt-signup:hover { text-decoration: none; }
+/* ============================================ */
+/* 1. Popular Items */
+.popContainer {
+  margin-left: 12vmin;
+  margin-top: 10vmin;
+}
+.popContainer > h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  letter-spacing: 4px;
+  color: #4D4D4D;
+}
+
+/* 1. Home Page Arts */
+.homePageArts {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+}
+/* ============================================ */
