@@ -3,7 +3,7 @@
   The numbers indicate elements belongs to:
   0: Top Navigation Bar
   1: Home Page
-  2. Sign Up Window
+  2. Sign Up & Login Window
   999: Modal
   ========================
 **/
@@ -38,7 +38,7 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.form-control {
+.form-control.searchBar {
   min-height: 48px !important;
   width: 45vw !important;
   border-radius: 3px;
@@ -111,17 +111,34 @@
   background-repeat: no-repeat;
   background-size: 22px 22px;
   border: 0;
+  margin-bottom: 40px;
+}
+
+/* 2. Sign up form */
+.form-control.allField {
+  width: 460px;
+  height: 45px;
+  border-radius: 50px;
+  margin-bottom: 20px;
+  border-color: #AAA !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200;
+  letter-spacing: 1px;
+}
+
+.signupLoginDivLine {
+  margin-top: 30px;
+  width: 460px;
+  height: 1px;
+  background-color: #AAA !important;
 }
 
 /* 2. Sign up submit button */
 .signupSubmitButton {
-  position: absolute;
-  bottom: 45px;
+  margin-top: 20px;
   width: 460px;
-  display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
   padding: 10px 30px;
   border-radius: 50px;
   color: #FFF;
@@ -130,11 +147,37 @@
   letter-spacing: 2px;
   background: linear-gradient(to right, #996CFD, #FF6287);
 }
+.signupSubmitButton:focus { outline:none; }
+
+/* 2. Login submit button */
+.loginSubmitButton {
+  margin-top: 20px;
+  width: 460px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 30px;
+  border-radius: 50px;
+  color: #FFF;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  letter-spacing: 2px;
+  background: linear-gradient(to right, #35BBF4, #00EDD7);
+}
+.loginSubmitButton:focus { outline:none; }
+.signupLoginTextContainer {
+  margin-top: 32px;
+}
+.signupLoginText {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200;
+  letter-spacing: 1px;
+  color: #AAA;
+}
 /* ============================================ */
 /* 999. Modal */
 .Modal {
   width: 550px;
-  height: 650px;
+  height: 435px;
   position: absolute;
 	top: 0;
 	bottom: 0;
