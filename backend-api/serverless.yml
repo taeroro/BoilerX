@@ -1,21 +1,4 @@
-# Welcome to Serverless!
-#
-# This file is the main config file for your service.
-# It's very minimal at this point and uses default values.
-# You can always add more config options for more control.
-# We've included some commented out config examples here.
-# Just uncomment any of them to get that config option.
-#
-# For full config options, check the docs:
-#    docs.serverless.com
-#
-# Happy Coding!
-
 service: boilerx-back # NOTE: update this with your service name
-
-# You can pin your service to only deploy with a specific Serverless version
-# Check out our docs for more details
-# frameworkVersion: "=X.X.X"
 
 plugins:
   - serverless-webpack
@@ -30,10 +13,42 @@ provider:
   region: us-east-1
   role: arn:aws:iam::462630007467:role/boilerx-app-dev-us-east-1-lambdaRole
 
-# you can overwrite defaults here
-#  stage: dev
-#  region: us-east-1
+functions:
+  insert_user:
+    handler: app/user/create_user.main
+    events:
+      - http:
+          path: user/create
+          method: post
+          cors: true
+          authorizer: aws_iam
 
+  get_current_user:
+    handler: app/user/get_current_user.main
+    events:
+      - http: 
+          path: user/current
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  create_items_popularity:
+    handler: app/content/get_items_popularity.main
+    events:
+      - http:
+          path: content/item_pop
+          method: get
+          cors: true
+          authorizer: aws_iam
+          
+  create_user:
+    handler: app/content/get_items_price.main
+    events:
+      - http:
+          path: content/item_price
+          method: get
+          cors: true
+          authorizer: aws_iam       
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
 #    - Effect: "Allow"
@@ -69,15 +84,6 @@ provider:
   # - cors enabled CORS (Cross-Origin Resource Sharing) for browser cross
   #     domain api call
   # - authorizer authenticate using the AWS IAM role
-functions:
-  create:
-    handler: app/user/create_user.main
-    events:
-      - http:
-          path: signup
-          method: post
-          cors: true
-          authorizer: aws_iam
 
 
 
