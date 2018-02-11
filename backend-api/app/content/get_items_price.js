@@ -15,29 +15,50 @@ export async function main(event, context, callback) {
    * subject:
    * crn: 
    */
-  let filter = "contains (#name, :keyword)";
-  let attr_name;
-  attr_name["#name"] = "name";
-  let attr_value;
-  attr_value[":keyword"] = data.keyword;
+  let filter = "";
+  let attr_name = {};
+  let attr_value = {};
+  let first = true;
+  if (data.keyword) {
+    first = false;
+    filter += "contains (#name, :keyword)";
+    attr_name["#name"] = "name";
+    attr_value[":keyword"] = data.keyword;
+  } 
   if (data.category) {
-    filter += " AND #cat = :cat";
+    if (!first) {
+      filter += " AND ";
+    }
+    first = false;
+    filter += "#cat = :cat";
     attr_name["#cat"] = "category";
     attr_value[":cat"] = data.category;
   }
   if (data.price) {
-    filter += " AND (#price BETWEEN :a AND :b)";
+    if (!first) {
+      filter += " AND ";
+    }
+    first = false;
+    filter += "#price BETWEEN :a AND :b";
     attr_name["#price"] = "price";
-    attr_value[":a"] = data.price[0];
-    attr_value[":b"] = data.price[1];
+    attr_value[":a"] = Number(data.price[0]);
+    attr_value[":b"] = Number(data.price[1]);
   }
   if (data.subject) {
-    filter += " AND #sub = :sub";
+    if (!first) {
+      filter += " AND ";
+    }
+    first = false;
+    filter += "#sub = :sub";
     attr_name["#sub"] = "subject";
     attr_value[":sub"] = data.subject;
   }
   if (data.crn) {
-    filter += " AND #crn = :crn";
+    if (!first) {
+      filter += " AND ";
+    }
+    first = false;
+    filter += "#crn = :crn";
     attr_name["#crn"] = "crn";
     attr_value[":crn"] = data.crn;
   }
@@ -47,8 +68,8 @@ export async function main(event, context, callback) {
     IndexName: "price-index",
     //ProjectionExpression: "Subject, LastPostDateTime, Replies, Tags",
     FilterExpression: filter,
-    ExpressionAttributeNames: {attr_name},
-    ExpressionAttributeValues: {attr_value}
+    ExpressionAttributeNames: attr_name,
+    ExpressionAttributeValues: attr_value
   };
 
   try {
@@ -56,6 +77,7 @@ export async function main(event, context, callback) {
     // Return current user in response body
     callback(null, success(result.Items));
   } catch (e) {
+    console.log(e);
     callback(null, failure({ status: false }));
   }
 }
