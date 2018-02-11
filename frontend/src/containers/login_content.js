@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import {
-  CognitoUserPool,
-  AuthenticationDetails,
-  CognitoUser
-} from "amazon-cognito-identity-js";
-
-/* non-packages */
-import config from "../config";
-
+import { connect} from 'react-redux';
+import { login } from '../actions';
 
 class LoginContent extends Component {
   renderField(field) {
@@ -29,6 +22,9 @@ class LoginContent extends Component {
 
   onSubmit(values) {
     // handle sumbit action
+    this.props.login(values, () => {
+      alert("Logged in");
+    });
   }
 
   render() {
@@ -70,4 +66,6 @@ function validate(values) {
 export default reduxForm({
   validate: validate,
   form: 'LoginForm' // has to be unique
-})(LoginContent);
+})(
+  connect(null,{login})(LoginContent)
+);
