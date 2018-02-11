@@ -2,6 +2,7 @@ service: boilerx-back # NOTE: update this with your service name
 
 plugins:
   - serverless-webpack
+  - serverless-mocha-plugin
 
 custom:
   webpackIncludeModules: true
@@ -19,7 +20,7 @@ functions:
     events:
       - http:
           path: user/create
-          method: post
+          method: put
           cors: true
           authorizer: aws_iam
 
@@ -32,7 +33,7 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  create_items_popularity:
+  get_items_popularity:
     handler: app/content/get_items_popularity.main
     events:
       - http:
@@ -40,15 +41,25 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
-          
-  create_user:
+
+  get_items_price:
     handler: app/content/get_items_price.main
     events:
       - http:
           path: content/item_price
           method: get
           cors: true
-          authorizer: aws_iam       
+          authorizer: aws_iam      
+
+  get_items:
+    handler: app/content/get_item.main
+    events:
+      - http:
+          path: content/
+          method: get
+          cors: true
+          authorizer: aws_iam 
+  
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
 #    - Effect: "Allow"

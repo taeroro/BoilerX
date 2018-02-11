@@ -44,11 +44,11 @@ export async function main(event, context, callback) {
   const params = {
     TableName: "Item",
     // GSI: getting filtered items by popularity
-    IndexName: "popularity-index",
-    ProjectionExpression: "Subject, LastPostDateTime, Replies, Tags",
+    IndexName: "price-index",
+    //ProjectionExpression: "Subject, LastPostDateTime, Replies, Tags",
     FilterExpression: filter,
-    ExpressionAttributeNames: attr_name,
-    ExpressionAttributeValues: attr_value
+    ExpressionAttributeNames: {attr_name},
+    ExpressionAttributeValues: {attr_value}
   };
 
   try {
