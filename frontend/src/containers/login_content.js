@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import {
+  CognitoUserPool,
+  AuthenticationDetails,
+  CognitoUser
+} from "amazon-cognito-identity-js";
+
+/* non-packages */
+import config from "../config";
+
 
 class LoginContent extends Component {
   renderField(field) {
