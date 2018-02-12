@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators} from 'redux';
+import { fetchItem } from '../actions/index';
 
 class SearchBar extends Component {
   /* constructor for the search bar */
@@ -9,6 +12,7 @@ class SearchBar extends Component {
 
     // bind this to make functions work properly
     this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
   }
 
   /* submit form function */
@@ -17,6 +21,12 @@ class SearchBar extends Component {
 
     // TODO: go and fetch data
     this.setState({ term: '' });
+    this.props.fetchItem(this.state.term)
+  }
+
+  /* change search bar value as user type */
+  onInputChange(event) {
+    this.setState({ term: event.target.value});
   }
 
   /* render function */
@@ -26,7 +36,7 @@ class SearchBar extends Component {
           <form onSubmit={this.onFormSubmit} className="input-group">
               <input
                 placeholder="Search something..."
-                className="form-control"
+                className="form-control searchBar"
                 value={this.state.term}
                 onChange={this.onInputChange}/>
           </form>
@@ -35,4 +45,8 @@ class SearchBar extends Component {
   }
 }
 
-export default SearchBar;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({fetchItem}, dispatch);
+}
+
+export default connect (null, mapDispatchToProps)(SearchBar);
