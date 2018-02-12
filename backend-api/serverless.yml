@@ -20,7 +20,7 @@ functions:
     events:
       - http:
           path: user/create
-          method: put
+          method: post
           cors: true
           authorizer: aws_iam
 
