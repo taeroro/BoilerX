@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators} from 'redux';
-import { fetchItem } from '../actions/index';
 
 class SearchBar extends Component {
   /* constructor for the search bar */
@@ -45,8 +44,4 @@ class SearchBar extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({fetchItem}, dispatch);
-}
-
-export default connect (null, mapDispatchToProps)(SearchBar);
+export default SearchBar;

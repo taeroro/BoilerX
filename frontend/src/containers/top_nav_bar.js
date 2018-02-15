@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 // non-packages
-import SearchBar from '../../containers/search_bar';
-import ProfileButtons from './profile_buttons';
+import SearchBar from './search_bar';
+// import ProfileButtons from '../components/elements/profile_buttons';
 
 class TopNavBar extends Component {
   render() {
@@ -17,7 +17,7 @@ class TopNavBar extends Component {
         </Link>
         <div className="navbar-nav">
           <SearchBar />
-          <ProfileButtons />
+          {/* <ProfileButtons /> */}
         </div>
       </nav>
     );
