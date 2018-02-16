@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators} from 'redux';
+import { withRouter } from "react-router-dom";
+import { invokeApig } from "../libs/awsLib";
 
 class SearchBar extends Component {
   /* constructor for the search bar */
@@ -14,13 +14,34 @@ class SearchBar extends Component {
     this.onInputChange = this.onInputChange.bind(this);
   }
 
+  componentWillReceiveProps(props) {
+    if (props.isHomePage == true) this.setState({ term: '' });
+  }
+
   /* submit form function */
-  onFormSubmit(event) {
+  onFormSubmit = async event => {
     event.preventDefault();
 
-    // TODO: go and fetch data
-    this.setState({ term: '' });
-    this.props.fetchItem(this.state.term)
+    if (this.state.term.length > 0) {
+      try {
+        const results = await this.fetchItem(this.state.term);
+        this.props.history.push("/search");
+        console.log(results);
+      } catch (e) {
+        alert(e);
+      }
+    }
+    else {
+      alert("Please enter the keyword!");
+    }
+  }
+
+  /* invoke api */
+  fetchItem(term) {
+    return invokeApig({
+      path: "/content",
+      method: "GET",
+    });
   }
 
   /* change search bar value as user type */
@@ -44,4 +65,4 @@ class SearchBar extends Component {
   }
 }
 
-export default SearchBar;
+export default withRouter(SearchBar);

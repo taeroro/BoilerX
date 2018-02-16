@@ -9,14 +9,17 @@
 /* ============================================ */
 /* 0. NavBar */
 .navbar {
-  min-height: 80px !important;
+  min-height: 72px !important;
   border-radius: 0 !important;
+  margin-bottom: 0 !important;
+  border: none !important;
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
 }
 .navbar-brand {
+  min-height: 68px !important;
   margin-left: 30px;
-  padding-top: 14px !important;
-  padding-bottom: 14px !important;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
 }
 .navbar-brand > span {
   font-family: 'Montserrat', sans-serif;
@@ -26,6 +29,21 @@
   display: inline-block;
   vertical-align: middle;
 }
+.brandAppear {
+  width: 99px;
+  opacity: 1;
+  -webkit-transition-duration: 0.4s;
+  transition: 0.4s;
+  overflow: visible;
+}
+.brandDisappear {
+  width: 0px;
+  opacity: 0;
+  -webkit-transition-duration: 0.4s;
+  transition: 0.4s;
+  overflow: hidden;
+}
+
 .navbar-brand > img {
   display: inline-block !important;
   margin-right: 10px;
@@ -34,8 +52,8 @@
 /* 0. SearchBar */
 .searchBar-container {
   margin-left: 30px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 .form-control.searchBar {
   min-height: 48px !important;
@@ -51,13 +69,17 @@
 }
 .navbar-nav {
   float: none !important;
+  height: 0 !important;
+}
+.navbar-nav .nav-item {
+  float: left;
 }
 /* 0. Profile Buttons */
 .buttonContainer {
   float: right;
-  margin-right: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  margin-right: 36px;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 #bt-login {
   text-transform: uppercase;
@@ -107,7 +129,7 @@
 /* 2. Form */
 .Login, .Signup > form {
   text-align: center !important;
-  padding-top: 50px;
+  padding-top: 80px;
 }
 .form-control.allField {
   width: 460px !important;
@@ -119,6 +141,10 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 200 !important;
   letter-spacing: 1px !important;
+}
+.help-block {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200 !important;
 }
 
 /* 2. Submit button */
@@ -143,7 +169,7 @@
 .LoaderButton .spinning.glyphicon {
   margin-right: 7px;
   top: 2px;
-  animation: spin 1s infinite linear;
+  animation: spin 0.8s infinite linear;
 }
 @keyframes spin {
   from { transform: scale(1) rotate(0deg); }

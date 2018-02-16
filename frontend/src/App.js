@@ -55,10 +55,12 @@ class App extends Component {
         <nav className="navbar">
           <Link className="navbar-brand" to="/">
             <img src={logoImgLink} width="40" height="40" alt=""/>
-              BoilerX
+              <span className={this.props.location.pathname == "/"
+              ? "brandAppear" : "brandDisappear"}>BoilerX</span>
           </Link>
           <div className="navbar-nav">
-            <SearchBar />
+            <SearchBar isHomePage={this.props.location.pathname == "/"
+            ? true : false}/>
             <div className="buttonContainer">
               {this.state.isAuthenticated
                 ? <button
@@ -74,7 +76,6 @@ class App extends Component {
                     </RouteNavItem>
                   ]}
             </div>
-
           </div>
         </nav>
         <Routes childProps={childProps} />

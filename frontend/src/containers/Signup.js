@@ -123,19 +123,20 @@ export default class Signup extends Component {
   renderConfirmationForm() {
     return (
       <form onSubmit={this.handleConfirmationSubmit}>
-        <FormGroup controlId="confirmationCode" bsSize="large">
-          <ControlLabel>Confirmation Code</ControlLabel>
+        <FormGroup controlId="confirmationCode">
           <FormControl
+            className="allField"
             autoFocus
             type="tel"
             value={this.state.confirmationCode}
             onChange={this.handleChange}
+            placeholder="Confirmation Code"
           />
           <HelpBlock>Please check your email for the code.</HelpBlock>
         </FormGroup>
         <LoaderButton
+          className="SubmitButton signupBtn"
           block
-          bsSize="large"
           disabled={!this.validateConfirmationForm()}
           type="submit"
           isLoading={this.state.isLoading}
