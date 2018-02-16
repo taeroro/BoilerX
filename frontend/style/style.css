@@ -3,21 +3,23 @@
   The numbers indicate elements belongs to:
   0: Top Navigation Bar
   1: Home Page
-  2. Sign Up Window
-  999: Modal
+  2. Sign Up & Login
   ========================
 **/
 /* ============================================ */
 /* 0. NavBar */
 .navbar {
-  min-height: 80px !important;
+  min-height: 72px !important;
   border-radius: 0 !important;
+  margin-bottom: 0 !important;
+  border: none !important;
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
 }
 .navbar-brand {
+  min-height: 68px !important;
   margin-left: 30px;
-  padding-top: 14px !important;
-  padding-bottom: 14px !important;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
 }
 .navbar-brand > span {
   font-family: 'Montserrat', sans-serif;
@@ -27,6 +29,21 @@
   display: inline-block;
   vertical-align: middle;
 }
+.brandAppear {
+  width: 99px;
+  opacity: 1;
+  -webkit-transition-duration: 0.4s;
+  transition: 0.4s;
+  overflow: visible;
+}
+.brandDisappear {
+  width: 0px;
+  opacity: 0;
+  -webkit-transition-duration: 0.4s;
+  transition: 0.4s;
+  overflow: hidden;
+}
+
 .navbar-brand > img {
   display: inline-block !important;
   margin-right: 10px;
@@ -35,10 +52,10 @@
 /* 0. SearchBar */
 .searchBar-container {
   margin-left: 30px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
-.form-control {
+.form-control.searchBar {
   min-height: 48px !important;
   width: 45vw !important;
   border-radius: 3px;
@@ -48,15 +65,21 @@
   font-weight: 300;
   letter-spacing: 2px;
   color: #767676;
-  z-index: 0 !important;
+  padding-left: 20px;
 }
-
+.navbar-nav {
+  float: none !important;
+  height: 0 !important;
+}
+.navbar-nav .nav-item {
+  float: left;
+}
 /* 0. Profile Buttons */
 .buttonContainer {
   float: right;
-  margin-right: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  margin-right: 36px;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 #bt-login {
   text-transform: uppercase;
@@ -103,55 +126,56 @@
   width: 100vw;
 }
 /* ============================================ */
-/* 2. SignupWindow */
-.windowCloseButton {
-  width: 22px;
-  height: 22px;
-  background: url(../src/img/close_modal_button.svg);
-  background-repeat: no-repeat;
-  background-size: 22px 22px;
-  border: 0;
+/* 2. Form */
+.Login, .Signup > form {
+  text-align: center !important;
+  padding-top: 80px;
+}
+.form-control.allField {
+  width: 460px !important;
+  height: 45px !important;
+  border-radius: 50px !important;
+  margin: auto auto 20px auto !important;
+  padding-left: 20px !important;
+  border-color: #AAA !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200 !important;
+  letter-spacing: 1px !important;
+}
+.help-block {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200 !important;
 }
 
-/* 2. Sign up submit button */
-.signupSubmitButton {
-  position: absolute;
-  bottom: 45px;
-  width: 460px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  padding: 10px 30px;
-  border-radius: 50px;
-  color: #FFF;
+/* 2. Submit button */
+.SubmitButton {
+  margin-top: 20px !important;
+  width: 460px !important;
+  height: 45px !important;
+  margin: 40px auto auto auto !important;
+  padding: 10px 30px !important;
+  border-radius: 50px !important;
+  border: none !important;
+  color: #FFF !important;
   font-family: 'Montserrat', sans-serif;
-  font-weight: 300;
-  letter-spacing: 2px;
-  background: linear-gradient(to right, #996CFD, #FF6287);
+  font-weight: 300 !important;
+  letter-spacing: 2px !important;
+}
+.SubmitButton:focus { outline:none !important; }
+.signupBtn { background: linear-gradient(to right, #996CFD, #FF6287) !important; }
+.loginBtn { background: linear-gradient(to right, #35BBF4, #00EDD7) !important; }
+
+/* 2. Loading Animation */
+.LoaderButton .spinning.glyphicon {
+  margin-right: 7px;
+  top: 2px;
+  animation: spin 0.8s infinite linear;
+}
+@keyframes spin {
+  from { transform: scale(1) rotate(0deg); }
+  to { transform: scale(1) rotate(360deg); }
 }
 /* ============================================ */
-/* 999. Modal */
-.Modal {
-  width: 550px;
-  height: 650px;
-  position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	margin: auto;
-  background-color: #fff;
-  padding: 45px;
-}
-.Overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.65);
-}
 
 /* Remove all button defualt styles */
 input, button, submit { border: none; }

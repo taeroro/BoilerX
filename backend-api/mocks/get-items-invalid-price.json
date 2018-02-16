@@ -1,0 +1,9 @@
+{
+    "body": "{\"category\": \"book\", \"subject\": \"physics\", \"price\": \"2\"}",
+    "requestContext": {
+      "identity": {
+        "cognitoIdentityId": "USER-SUB-1235"
+      }
+    }
+  }
+  

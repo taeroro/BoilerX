@@ -16,7 +16,7 @@ export async function main(event, context, callback) {
     Item: {
       userId: event.requestContext.identity.cognitoIdentityId,
       email: data.email,
-      pass: data.pass
+      //pass: data.pass
       //createdAt: new Date().getTime()
     }
 
