@@ -15,7 +15,8 @@ class App extends Component {
 
     this.state = {
       isAuthenticated: false,
-      isAuthenticating: true
+      isAuthenticating: true,
+      searchItems: []
     };
   }
 
@@ -42,10 +43,16 @@ class App extends Component {
     this.props.history.push("/login");
   }
 
+  // use the data passed from searchBar
+  searchTermCallback = searchItems => {
+    this.setState({ searchItems: searchItems });
+  }
+
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
-      userHasAuthenticated: this.userHasAuthenticated
+      userHasAuthenticated: this.userHasAuthenticated,
+      searchItems: this.state.searchItems
     };
     const logoImgLink = "src/img/BoilerX_logo-01.svg";
 
@@ -59,8 +66,10 @@ class App extends Component {
               ? "brandAppear" : "brandDisappear"}>BoilerX</span>
           </Link>
           <div className="navbar-nav">
-            <SearchBar isHomePage={this.props.location.pathname == "/"
-            ? true : false}/>
+            <SearchBar
+              isHomePage={this.props.location.pathname == "/" ? true : false}
+              callbackFromParent={this.searchTermCallback}
+            />
             <div className="buttonContainer">
               {this.state.isAuthenticated
                 ? <button
