@@ -8,8 +8,8 @@ import { success, failure } from "../libs/response-lib";
  * @apiParam {String} email Purdue email of the user.
  * @apiParam {String} username 
  * 
- * @apiSuccess {Object} "" a JSON object of user info.
- * @apiSuccess {JSON} status false
+ * @apiSuccess {Object} inBody a JSON object of user info.
+ * @apiError {JSON} status false
  */
 export async function main(event, context, callback) {
   // Request body is passed in as a JSON encoded string in 'event.body'

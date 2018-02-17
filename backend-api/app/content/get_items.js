@@ -5,8 +5,8 @@ import { success, failure } from "../libs/response-lib";
  * @apiName getItems
  * @apiGroup content
  * 
- * @apiSuccess {Object[]}
- * @apiSuccess {JSON} status false
+ * @apiSuccess {Object[]} inBody array Of Items
+ * @apiError {JSON} status false
  */
 export async function main(event, context, callback) {
   

@@ -12,13 +12,13 @@ import { success, failure } from "../libs/response-lib";
  * @apiParam (body) {String} name Name of the item.
  * @apiParam (body) {String} [category] Category of the item. later we shall predefine our categories.
  * @apiParam (body) {String} [subject] Subject of the item.
- * @apiParam (body) {String} sellerName Seller's name. Please call user/current to get the username.
+ * @apiParam (body) {String} sellerName Seller\'s name. Please call user/current to get the username.
  * @apiParam (body) {String} price Price of the item.
  * @apiParam (body) {Number} [crn] CRN of the class of which use the book.
  * @apiParam (body) {String} [imageURL] url of the image in S3 bucket.
  * 
  * @apiSuccess {JSON} status true
- * @apiSuccess {JSON} status false
+ * @apiError {JSON} status false
  */
 export async function main(event, context, callback) {
   // Request body is passed in as a JSON encoded string in 'event.body'

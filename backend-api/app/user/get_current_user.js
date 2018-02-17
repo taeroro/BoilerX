@@ -2,11 +2,11 @@ import * as dynamoDbLib from "../libs/dynamodb-lib";
 import { success, failure } from "../libs/response-lib";
 /**
  * @api {get} /user/current Get information of the current user.
- * @apiName getItemsPrice
- * @apiGroup content
+ * @apiName getCurrentUser
+ * @apiGroup User
  *  
- * @apiSuccess {Object} "" a JSON object of user info.
- * @apiSuccess {JSON} status false
+ * @apiSuccess {Object} inBody a JSON object of user info.
+ * @apiError {JSON} status false
  */
 export async function main(event, context, callback) {
   const params = {
