@@ -3,21 +3,25 @@ import React, { Component } from "react";
 import SearchPageItemContainer from "./SearchPageItemContainer";
 
 export default class SearchResult extends Component {
-  constructor(props) {
-    super(props);
-
-    console.log(props.searchItems);
-
-    this.state = {
-      isLoading: false
-    };
-  }
-
   render() {
+    if (this.props.searchItems.length == 0) {
+      return (
+        <div className="SearchPageContainer">
+          No item
+        </div>
+      );
+    }
+
     return (
-      <div>
-        Search results
-        <SearchPageItemContainer />
+        <div className="container-fluid">
+          <div className="row">
+            {this.props.searchItems.map((item) =>
+              <SearchPageItemContainer
+                itemInfo={item}
+                key={item.itemID}
+              />
+            )}
+          </div>
       </div>
     );
   }

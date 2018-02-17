@@ -9,7 +9,7 @@ export default props =>
     exact
     children={({ match, history }) =>
       <button
-        id="bt-login"
+        id={props.id}
         className="nav-item"
         onClick={e => history.push(e.currentTarget.getAttribute("href"))}
         {...props}
