@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // non-packages
-import PopularItems from '../../containers/pop_items';
+import PopularItems from '../containers/pop_items';
 
 class HomePage extends Component {
   render() {
