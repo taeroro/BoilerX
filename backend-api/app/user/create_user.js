@@ -1,7 +1,16 @@
-import uuid from "uuid";
 import * as dynamoDbLib from "../libs/dynamodb-lib";
 import { success, failure } from "../libs/response-lib";
-
+/**
+ * @api {post} /user/create Save user information to database.
+ * @apiName createUser
+ * @apiGroup User
+ * 
+ * @apiParam {String} email Purdue email of the user.
+ * @apiParam {String} username 
+ * 
+ * @apiSuccess {Object} "" a JSON object of user info.
+ * @apiSuccess {JSON} status false
+ */
 export async function main(event, context, callback) {
   // Request body is passed in as a JSON encoded string in 'event.body'
   const data = JSON.parse(event.body);
@@ -16,6 +25,7 @@ export async function main(event, context, callback) {
     Item: {
       userId: event.requestContext.identity.cognitoIdentityId,
       email: data.email,
+      username: data.username
       //pass: data.pass
       //createdAt: new Date().getTime()
     }

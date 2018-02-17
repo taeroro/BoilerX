@@ -1,5 +1,5 @@
 {
-    "body": "{\"keyword\":\"\"}",
+    "body": "{\"name\": \"Milk Drink\", \"category\": \"food\", \"price\": \"2.99\"}",
     "requestContext": {
       "identity": {
         "cognitoIdentityId": "USER-SUB-1235"

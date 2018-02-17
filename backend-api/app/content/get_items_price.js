@@ -1,6 +1,22 @@
 import * as dynamoDbLib from "../libs/dynamodb-lib";
 import { success, failure } from "../libs/response-lib";
-
+/**
+ * @apiDefine query parameter from request query
+ */
+/**
+ * @api {get} /content/item_price Get items fullfilling conditons ranked by price.
+ * @apiName getItemsPrice
+ * @apiGroup content
+ * 
+ * @apiParam (query) {String} [keyword] Search keyword.
+ * @apiParam (query) {String} [category] Category of the item. later we shall predefine our categories.
+ * @apiParam (query) {String} [subject] Subject of the item.
+ * @apiParam (query) {Number} [crn] CRN of the class of which use the book.
+ * @apiParam (query) {Number[2]} price Price range of the item, price[0] is lower bound and price[1] is upper bound.
+ * 
+ * @apiSuccess {Object[]}
+ * @apiSuccess {JSON} status false
+ */
 export async function main(event, context, callback) {
   // Request body is passed in as a JSON encoded string in 'event.body'
   const data = JSON.parse(event.query);
@@ -23,7 +39,7 @@ export async function main(event, context, callback) {
     first = false;
     filter += "contains (#name, :keyword)";
     attr_name["#name"] = "name";
-    attr_value[":keyword"] = data.keyword;
+    attr_value[":keyword"] = String(data.keyword).toLowerCase();
   } 
   if (data.category) {
     if (!first) {
@@ -32,7 +48,7 @@ export async function main(event, context, callback) {
     first = false;
     filter += "#cat = :cat";
     attr_name["#cat"] = "category";
-    attr_value[":cat"] = data.category;
+    attr_value[":cat"] = String(data.category).toLowerCase();
   }
   if (data.price) {
     if (!first) {
@@ -51,7 +67,7 @@ export async function main(event, context, callback) {
     first = false;
     filter += "#sub = :sub";
     attr_name["#sub"] = "subject";
-    attr_value[":sub"] = data.subject;
+    attr_value[":sub"] = String(data.subject).toLowerCase();
   }
   if (data.crn) {
     if (!first) {

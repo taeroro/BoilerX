@@ -1,6 +1,19 @@
 import * as dynamoDbLib from "../libs/dynamodb-lib";
 import { success, failure } from "../libs/response-lib";
-
+/**
+ * @api {get} /content/item_pop Get items fullfilling conditons ranked by popularity.
+ * @apiName getItemsPop
+ * @apiGroup content
+ * 
+ * @apiParam (query) {String} [keyword] Search keyword.
+ * @apiParam (query) {String} [category] Category of the item. later we shall predefine our categories.
+ * @apiParam (query) {String} [subject] Subject of the item.
+ * @apiParam (query) {Number} [crn] CRN of the class of which use the book.
+ * @apiParam (query) {Number[2]} price Price range of the item, price[0] is lower bound and price[1] is upper bound.
+ * 
+ * @apiSuccess {Object[]}
+ * @apiSuccess {JSON} status false
+ */
 export async function main(event, context, callback) {
   // Request body is passed in as a JSON encoded string in 'event.body'
   

@@ -21,7 +21,7 @@ functions:
       - http:
           path: user/create
           method: post
-          cors: true
+          cors: false
           authorizer: aws_iam
 
   get_current_user:
@@ -30,7 +30,7 @@ functions:
       - http: 
           path: user/current
           method: get
-          cors: true
+          cors: false
           authorizer: aws_iam
 
   get_items_popularity:
@@ -39,7 +39,7 @@ functions:
       - http:
           path: content/item_pop
           method: get
-          cors: true
+          cors: false
           authorizer: aws_iam
 
   get_items_price:
@@ -48,18 +48,27 @@ functions:
       - http:
           path: content/item_price
           method: get
-          cors: true
+          cors: false
           authorizer: aws_iam      
 
   get_items:
-    handler: app/content/get_item.main
+    handler: app/content/get_items.main
     events:
       - http:
           path: content/
           method: get
-          cors: true
+          cors: false
           authorizer: aws_iam 
   
+  post_item:
+    handler: app/content/post_item.main
+    events:
+      - http: 
+          path: content/create
+          method: post
+          cors: false
+          authorizer: aws_iam
+
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
 #    - Effect: "Allow"
