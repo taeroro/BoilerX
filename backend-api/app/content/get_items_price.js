@@ -64,8 +64,6 @@ export async function main(event, context, callback) {
   }
   const params = {
     TableName: "Item",
-    // GSI: getting filtered items by popularity
-    IndexName: "price-index",
     //ProjectionExpression: "Subject, LastPostDateTime, Replies, Tags",
     FilterExpression: filter,
     ExpressionAttributeNames: attr_name,
@@ -74,7 +72,10 @@ export async function main(event, context, callback) {
 
   try {
     const result = await dynamoDbLib.call("scan", params);
-    // Return current user in response body
+    console.log("success");
+    result.Items.sort(function(a, b) {
+      return parseInt(a.price) - parseInt(b.price);
+    });
     callback(null, success(result.Items));
   } catch (e) {
     console.log(e);

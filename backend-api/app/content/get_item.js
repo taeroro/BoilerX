@@ -7,14 +7,14 @@ export async function main(event, context, callback) {
 
   const params = {
     TableName: "Item",
-    // GSI: getting filtered items by popularity
-    IndexName: "price-index"
-    
+    Limit: 6
   };
 
   try {
     const result = await dynamoDbLib.call("scan", params);
-    // Return current user in response body
+    result.Items.sort(function(a, b) {
+      return parseInt(b.popularity) - parseInt(a.popularity);
+    });
     callback(null, success(result.Items));
   } catch (e) {
     callback(null, failure({ status: false }));
