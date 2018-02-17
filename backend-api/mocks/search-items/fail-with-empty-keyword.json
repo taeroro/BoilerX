@@ -1,9 +1,0 @@
-{
-    "query": "{\"keyword\":\"\"}",
-    "requestContext": {
-      "identity": {
-        "cognitoIdentityId": "USER-SUB-1235"
-      }
-    }
-  }
-  
