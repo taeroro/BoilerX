@@ -85,16 +85,37 @@ export async function main(event, context, callback) {
     ExpressionAttributeNames: attr_name,
     ExpressionAttributeValues: attr_value
   }
-
+  /** 
+  try {
+    const result = await dynamoDbLib.call("scan", params);
+    console.log("success");
+    result.Items.sort(function(a, b) {
+      return parseInt(a.price) - parseInt(b.price);
+    });
+    callback(null, success(result.Items));
+  } catch (e) {
+    console.log(e);
+    callback(null, failure({ status: false }));
+  }
+  */
+  
   try {
     const result = await dynamoDbLib.call("scan", params);
     console.log("success");
     result.Items.sort(function(a, b) {
       return parseInt(b.popularity) - parseInt(a.popularity);
     });
-    callback(null, success(result.Items));
+    if (event.httpMethod === 'OPTIONS' || event.httpMethod === 'options') {
+      callback(null, success2({status: true}));
+    } else {
+      callback(null, success(result.Items));
+    }
   } catch (e) {
     console.log(e);
-    callback(null, failure({ status: false }));
+    if (event.httpMethod === 'OPTIONS' || event.httpMethod === 'options') {
+      callback(null, failure2({ status: false }));
+    } else {
+      callback(null, failure({ status: false }));
+    }
   }
 }
