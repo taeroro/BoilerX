@@ -3,21 +3,25 @@
   The numbers indicate elements belongs to:
   0: Top Navigation Bar
   1: Home Page
-  2. Sign Up & Login Window
-  999: Modal
+  2. Sign Up & Login
+  3. Search Page & Search Page Items
+  4. Searched Item Detail Page
   ========================
 **/
 /* ============================================ */
 /* 0. NavBar */
 .navbar {
-  min-height: 80px !important;
+  min-height: 72px !important;
   border-radius: 0 !important;
+  margin-bottom: 0 !important;
+  border: none !important;
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
 }
 .navbar-brand {
+  min-height: 68px !important;
   margin-left: 30px;
-  padding-top: 14px !important;
-  padding-bottom: 14px !important;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
 }
 .navbar-brand > span {
   font-family: 'Montserrat', sans-serif;
@@ -27,6 +31,21 @@
   display: inline-block;
   vertical-align: middle;
 }
+.brandAppear {
+  width: 99px;
+  opacity: 1;
+  -webkit-transition-duration: 0.4s;
+  transition: 0.4s;
+  overflow: visible;
+}
+.brandDisappear {
+  width: 0px;
+  opacity: 0;
+  -webkit-transition-duration: 0.4s;
+  transition: 0.4s;
+  overflow: hidden;
+}
+
 .navbar-brand > img {
   display: inline-block !important;
   margin-right: 10px;
@@ -35,8 +54,8 @@
 /* 0. SearchBar */
 .searchBar-container {
   margin-left: 30px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 .form-control.searchBar {
   min-height: 48px !important;
@@ -48,15 +67,21 @@
   font-weight: 300;
   letter-spacing: 2px;
   color: #767676;
-  z-index: 0 !important;
+  padding-left: 20px;
 }
-
+.navbar-nav {
+  float: none !important;
+  height: 0 !important;
+}
+.navbar-nav .nav-item {
+  float: left;
+}
 /* 0. Profile Buttons */
 .buttonContainer {
   float: right;
-  margin-right: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  margin-right: 36px;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 #bt-login {
   text-transform: uppercase;
@@ -67,6 +92,7 @@
   padding: 10px 30px;
   text-decoration: none !important;
   border: none;
+  background-color: #fff;
 }
 #bt-login:focus { outline:none; }
 #bt-signup {
@@ -81,6 +107,7 @@
   border-radius: 50px;
   padding: 8px 30px;
   text-decoration: none !important;
+  background-color: #fff;
 }
 #bt-signup:focus { outline:none; }
 /* ============================================ */
@@ -102,99 +129,225 @@
   bottom: 0;
   width: 100vw;
 }
-/* ============================================ */
-/* 2. SignupWindow */
-.windowCloseButton {
-  width: 22px;
-  height: 22px;
-  background: url(../src/img/close_modal_button.svg);
-  background-repeat: no-repeat;
-  background-size: 22px 22px;
-  border: 0;
-  margin-bottom: 40px;
+
+/* 1. Home Page Popular Items*/
+.col-md-2 {
+  text-align: center;
+  min-width: 230px;
+}
+.itemContainer {
+  margin-top: 20px;
+  display: inline-block;
+  width: 180px;
+  text-align: left;
+  box-shadow: 0px 2px 8px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.itemImg {
+  width: 180px;
+  height: 180px;
+}
+.itemName {
+  margin-top: 5px;
+  margin-left: 15px;
+  margin-bottom: 15px;
+  color: #565656;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300 !important;
+  letter-spacing: 2px !important;
+  font-size: 14px;
+}
+.itemViews {
+  margin-top: 3px;
+  margin-left: 15px;
+  margin-bottom: 12px;
+  float: left;
+  color: #949494;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300 !important;
+  letter-spacing: 1.5px !important;
+  font-size: 10px;
+}
+.itemPrice {
+  margin-right: 10px;
+  margin-bottom: 12px;
+  float: right;
+  color: #565656;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300 !important;
+  letter-spacing: 3px !important;
+  font-size: 14px;
 }
 
-/* 2. Sign up form */
+/* ============================================ */
+/* 2. Form */
+.Login, .Signup > form {
+  text-align: center !important;
+  padding-top: 80px;
+}
 .form-control.allField {
-  width: 460px;
-  height: 45px;
-  border-radius: 50px;
-  margin-bottom: 20px;
+  width: 460px !important;
+  height: 45px !important;
+  border-radius: 50px !important;
+  margin: auto auto 20px auto !important;
+  padding-left: 20px !important;
   border-color: #AAA !important;
   font-family: 'Montserrat', sans-serif;
-  font-weight: 200;
-  letter-spacing: 1px;
+  font-weight: 200 !important;
+  letter-spacing: 1px !important;
+}
+.help-block {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200 !important;
 }
 
-.signupLoginDivLine {
-  margin-top: 30px;
-  width: 460px;
-  height: 1px;
-  background-color: #AAA !important;
+/* 2. Submit button */
+.SubmitButton {
+  margin-top: 20px !important;
+  width: 460px !important;
+  height: 45px !important;
+  margin: 40px auto auto auto !important;
+  padding: 10px 30px !important;
+  border-radius: 50px !important;
+  border: none !important;
+  color: #FFF !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300 !important;
+  letter-spacing: 2px !important;
 }
+.SubmitButton:focus { outline:none !important; }
+.signupBtn { background: linear-gradient(to right, #996CFD, #FF6287) !important; }
+.loginBtn { background: linear-gradient(to right, #35BBF4, #00EDD7) !important; }
 
-/* 2. Sign up submit button */
-.signupSubmitButton {
-  margin-top: 20px;
-  width: 460px;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 30px;
-  border-radius: 50px;
-  color: #FFF;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 300;
-  letter-spacing: 2px;
-  background: linear-gradient(to right, #996CFD, #FF6287);
+/* 2. Loading Animation */
+.LoaderButton .spinning.glyphicon {
+  margin-right: 7px;
+  top: 2px;
+  animation: spin 0.8s infinite linear;
 }
-.signupSubmitButton:focus { outline:none; }
-
-/* 2. Login submit button */
-.loginSubmitButton {
-  margin-top: 20px;
-  width: 460px;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 30px;
-  border-radius: 50px;
-  color: #FFF;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 300;
-  letter-spacing: 2px;
-  background: linear-gradient(to right, #35BBF4, #00EDD7);
-}
-.loginSubmitButton:focus { outline:none; }
-.signupLoginTextContainer {
-  margin-top: 32px;
-}
-.signupLoginText {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 200;
-  letter-spacing: 1px;
-  color: #AAA;
+@keyframes spin {
+  from { transform: scale(1) rotate(0deg); }
+  to { transform: scale(1) rotate(360deg); }
 }
 /* ============================================ */
-/* 999. Modal */
-.Modal {
-  width: 550px;
-  height: 435px;
-  position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	margin: auto;
-  background-color: #fff;
-  padding: 45px;
-}
-.Overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.65);
+/* 3. Search Page Container */
+.container-fluid {
+  margin: 60px 150px;
 }
 
+/* 3. Search Page Items */
+.col-md-4 {
+  text-align: center;
+}
+.SPItemContainerAni {
+  border-radius: 5px;
+  width: 330px;
+  padding: 25px;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+  -webkit-transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.SPItemContainerAni:hover {
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3);
+  -webkit-transform: scale(1.08, 1.08);
+  transform: scale(1.08, 1.08);
+}
+.SPItemContainerAni:hover .SPItemImg {
+  border-style: none;
+}
+.SPItemContainer {
+  display: inline-block;
+  width: 280px;
+  text-align: left;
+}
+.SPItemImg {
+  width: 280px;
+  height: 280px;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ACACAC;
+}
+.SPItemName {
+  margin-top: 12px;
+  margin-bottom: 0px;
+  color: #262626;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400 !important;
+  letter-spacing: 2px !important;
+  font-size: 18px;
+}
+.SPItemTag {
+  height: 23px;
+  border-radius: 100px;
+  background-color: #4D4D4D;
+  display: inline-block;
+  padding: 0px 10px;
+  margin-top: 3px;
+  margin-bottom: 6px;
+}
+.SPItemTagName {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300 !important;
+  letter-spacing: 1px !important;
+  font-size: 12px;
+  color: #fff;
+}
+.SPItemDescr {
+  max-height: 45px;
+  width: 280px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300 !important;
+  letter-spacing: 1px !important;
+  font-size: 12px;
+  color: #464646;
+  margin-bottom: 5px;
+}
+.SPItemPrice {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400 !important;
+  letter-spacing: 1.5px !important;
+  font-size: 18px;
+  color: #000;
+  width: 280px;
+  text-align: right;
+  margin-bottom: 0px;
+}
+/* ============================================ */
+/* 4. Searched Page Item Detail Page */
+.itemDetailPage {
+  padding-top: 30px;
+}
+.itemDetailTopBar {
+  margin-left: 50px;
+}
+.backButton {
+  display: inline-block;
+  background-color: #4D4D4D;
+  height: 40px;
+  width: 40px;
+  border-radius: 50px;
+  padding: 9px 11px 11px 9px;
+}
+.backBT-img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+.backnTag {
+  display: inline-block;
+  margin-left: 15px;
+  margin-right: 9px;
+  padding: 7.5px 0px;
+  color: #4D4D4D;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300 !important;
+  letter-spacing: 3px !important;
+  font-size: 18px;
+}
+/* ============================================ */
 /* Remove all button defualt styles */
 input, button, submit { border: none; }
