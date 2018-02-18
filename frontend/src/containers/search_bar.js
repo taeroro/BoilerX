@@ -58,6 +58,7 @@ class SearchBar extends Component {
               <input
                 placeholder="Search something..."
                 className="form-control searchBar"
+                id = "searchBar"
                 value={this.state.term}
                 onChange={this.onInputChange}/>
           </form>
