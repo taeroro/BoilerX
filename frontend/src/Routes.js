@@ -7,10 +7,12 @@ import AppliedRoute from "./components/AppliedRoute";
 import Login from "./containers/Login";
 import Signup from "./containers/Signup";
 import SearchResult from "./containers/SearchResult";
+import SearchResultDetail from "./containers/SearchResultDetail";
 import NotFound from "./containers/NotFound";
 
 export default ({ childProps }) =>
   <Switch>
+    <Route path="/search/:id" exact component={SearchResultDetail} props={childProps} />
     <AppliedRoute path="/search" exact component={SearchResult} props={childProps} />
     <AppliedRoute path="/signup" exact component={Signup} props={childProps} />
     <AppliedRoute path="/login" exact component={Login} props={childProps} />

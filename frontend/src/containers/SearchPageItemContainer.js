@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
 
-export default class SearchPageItemContainer extends Component {
+class SearchPageItemContainer extends Component {
   renderImage() {
     // TODO: change this line when the item has url in DB
     const itemImgURL = "src/img/hilver-table__0307336_PE427543_S4.JPG";
@@ -39,7 +40,7 @@ export default class SearchPageItemContainer extends Component {
   render() {
     return (
       <div className="col-md-4">
-        <div className="SPItemContainerAni">
+        <Link className="SPItemContainerAni" to={"/search/" + this.props.itemInfo.itemID}>
           <div className="SPItemContainer">
             {this.renderImage()}
             {this.renderItemName()}
@@ -47,8 +48,10 @@ export default class SearchPageItemContainer extends Component {
             {this.renderDescr()}
             {this.renderPrice()}
           </div>
-        </div>
+        </Link>
       </div>
     );
   }
 }
+
+export default withRouter(SearchPageItemContainer);

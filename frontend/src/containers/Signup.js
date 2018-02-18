@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { HelpBlock, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { AuthenticationDetails, CognitoUserPool } from "amazon-cognito-identity-js";
+import { invokeApig } from "../libs/awsLib";
 
 import config from "../config";
 import LoaderButton from "../components/LoaderButton";
@@ -68,11 +69,23 @@ export default class Signup extends Component {
       );
 
       this.props.userHasAuthenticated(true);
+      this.signupDB();
       this.props.history.push("/");
     } catch (e) {
       alert(e);
       this.setState({ isLoading: false });
     }
+  }
+
+  signupDB() {
+
+    console.log(this.state.email);
+    
+    return invokeApig({
+      path: "/user/create",
+      method: "POST",
+      body: { email: this.state.email }
+    });
   }
 
   signup(email, password) {
