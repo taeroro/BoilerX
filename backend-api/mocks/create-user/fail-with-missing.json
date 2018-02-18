@@ -1,6 +1,6 @@
 {
-    "body": "{\"keyword\":\"\"}",
-    "requestContext": {
+  "body": "{\"name\": \"aaa\"}",
+  "requestContext": {
       "identity": {
         "cognitoIdentityId": "USER-SUB-1235"
       }

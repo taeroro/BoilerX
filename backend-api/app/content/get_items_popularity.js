@@ -1,21 +1,31 @@
 import * as dynamoDbLib from "../libs/dynamodb-lib";
 import { success, failure } from "../libs/response-lib";
-
+/**
+ * @api {get} /content/item_pop Get items fullfilling conditons ranked by popularity.
+ * @apiName getItemsPop
+ * @apiGroup content
+ * 
+ * @apiParam (query) {String} keyword Search keyword.
+ * @apiParam (query) {String} [category] Category of the item. later we shall predefine our categories.
+ * @apiParam (query) {String} [subject] Subject of the item.
+ * @apiParam (query) {Number} [crn] CRN of the class of which use the book.
+ * @apiParam (query) {Number[2]} [price] Price range of the item, price[0] is lower bound and price[1] is upper bound.
+ * 
+ * @apiSuccess {Object[]}
+ * @apiSuccess {JSON} status false
+ */
 export async function main(event, context, callback) {
   // Request body is passed in as a JSON encoded string in 'event.body'
   
-  const data = JSON.parse(event.body);
+  const data = JSON.parse(event.query);
 
-  /**
-   * conditions include:
-   * name: for search:  only one word allowed
-   *    contains (Name, :keyword) 
-   *    : return all items with name containing keyword as substring
-   * category: string
-   * price: range : parse in a 2 elements array [lower, upper]
-   * subject:
-   * crn: 
-   */
+  if (!data.keyword) {
+    callback(null, failure({ 
+      status: false, 
+      message: "missing keyword"
+    }));
+    return;
+  }
   let filter = "";
   let attr_name = {};
   let attr_value = {};
@@ -67,20 +77,42 @@ export async function main(event, context, callback) {
   console.log(attr_value);
   const params = {
     TableName: "Item",
-    // GSI: getting filtered items by popularity
-    IndexName: "popularity-index",
     //ProjectionExpression: "Subject, LastPostDateTime, Replies, Tags",
     FilterExpression: filter,
     ExpressionAttributeNames: attr_name,
     ExpressionAttributeValues: attr_value
   }
-
+  /** 
   try {
     const result = await dynamoDbLib.call("scan", params);
-    // Return current user in response body
+    console.log("success");
+    result.Items.sort(function(a, b) {
+      return parseInt(a.price) - parseInt(b.price);
+    });
     callback(null, success(result.Items));
   } catch (e) {
     console.log(e);
     callback(null, failure({ status: false }));
+  }
+  */
+  
+  try {
+    const result = await dynamoDbLib.call("scan", params);
+    console.log("success");
+    result.Items.sort(function(a, b) {
+      return parseInt(b.popularity) - parseInt(a.popularity);
+    });
+    if (event.httpMethod === 'OPTIONS' || event.httpMethod === 'options') {
+      callback(null, success2({status: true}));
+    } else {
+      callback(null, success(result.Items));
+    }
+  } catch (e) {
+    console.log(e);
+    if (event.httpMethod === 'OPTIONS' || event.httpMethod === 'options') {
+      callback(null, failure2({ status: false }));
+    } else {
+      callback(null, failure({ status: false }));
+    }
   }
 }
