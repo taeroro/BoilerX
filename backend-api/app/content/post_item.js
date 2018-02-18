@@ -16,6 +16,7 @@ import { success, failure } from "../libs/response-lib";
  * @apiParam (body) {String} price Price of the item.
  * @apiParam (body) {Number} [crn] CRN of the class of which use the book.
  * @apiParam (body) {String} [imageURL] url of the image in S3 bucket.
+ * @apiParam (body) {String} [descr] Description of the item.
  * 
  * @apiSuccess {JSON} status true
  * @apiSuccess {JSON} status false
@@ -23,7 +24,13 @@ import { success, failure } from "../libs/response-lib";
 export async function main(event, context, callback) {
   // Request body is passed in as a JSON encoded string in 'event.body'
   const data = JSON.parse(event.body);
-
+  if (!data.name || !data.price || !sellerName) {
+    callback(null, failure({ 
+      status: false, 
+      message: "missing required parameters"
+    }));
+    return;
+  }
   const params = {
     TableName: "Item",
     Item: {
@@ -39,6 +46,7 @@ export async function main(event, context, callback) {
       crn: data.crn? Number(data.crn): null,
       // may set default in S3
       imageURL: data.imageURL,
+      descr: data.descr,
       createdAt: new Date().getTime()
     }
     

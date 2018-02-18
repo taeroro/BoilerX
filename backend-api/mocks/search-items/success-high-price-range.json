@@ -1,5 +1,5 @@
 {
-    "body": "{\"category\": \"book\", \"subject\": \"physics\", \"price\": [\"1\", \"10000\"]}",
+    "query": "{\"keyword\": \"a\", \"price\": [\"1000\", \"10000\"]}",
     "requestContext": {
       "identity": {
         "cognitoIdentityId": "USER-SUB-1235"

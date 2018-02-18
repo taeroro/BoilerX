@@ -15,6 +15,13 @@ export async function main(event, context, callback) {
   // Request body is passed in as a JSON encoded string in 'event.body'
   const data = JSON.parse(event.body);
 
+  if (!event.requestContext.identity.cognitoIdentityId || !data.email ){//|| !data.username) {
+    callback(null, failure({ 
+      status: false, 
+      message: "missing required parameters"
+    }));
+    return;
+  }
   const params = {
     TableName: "User",
     // 'Item' contains the attributes of the item to be created
@@ -35,11 +42,6 @@ export async function main(event, context, callback) {
     await dynamoDbLib.call("put", params);
     callback(null, success(params.Item));
   } catch (e) {
-    console.log("Got error:", err.message);
-    console.log("Request:");
-    console.log(this.request.httpRequest);
-    console.log("Response:");
-    console.log(this.httpResponse);
     callback(null, failure({ status: false }));
   }
 

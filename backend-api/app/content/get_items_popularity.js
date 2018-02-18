@@ -5,11 +5,11 @@ import { success, failure } from "../libs/response-lib";
  * @apiName getItemsPop
  * @apiGroup content
  * 
- * @apiParam (query) {String} [keyword] Search keyword.
+ * @apiParam (query) {String} keyword Search keyword.
  * @apiParam (query) {String} [category] Category of the item. later we shall predefine our categories.
  * @apiParam (query) {String} [subject] Subject of the item.
  * @apiParam (query) {Number} [crn] CRN of the class of which use the book.
- * @apiParam (query) {Number[2]} price Price range of the item, price[0] is lower bound and price[1] is upper bound.
+ * @apiParam (query) {Number[2]} [price] Price range of the item, price[0] is lower bound and price[1] is upper bound.
  * 
  * @apiSuccess {Object[]}
  * @apiSuccess {JSON} status false
@@ -19,16 +19,13 @@ export async function main(event, context, callback) {
   
   const data = JSON.parse(event.query);
 
-  /**
-   * conditions include:
-   * name: for search:  only one word allowed
-   *    contains (Name, :keyword) 
-   *    : return all items with name containing keyword as substring
-   * category: string
-   * price: range : parse in a 2 elements array [lower, upper]
-   * subject:
-   * crn: 
-   */
+  if (!data.keyword) {
+    callback(null, failure({ 
+      status: false, 
+      message: "missing keyword"
+    }));
+    return;
+  }
   let filter = "";
   let attr_name = {};
   let attr_value = {};

@@ -12,7 +12,7 @@ export async function main(event, context, callback) {
   
   const params = {
     TableName: "Item",
-    Limit: 6
+    Limit: 5
   };
 
   try {
