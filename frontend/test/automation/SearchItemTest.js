@@ -1,9 +1,10 @@
 const expect = require('chai').expect;
 
-describe('Login and Logout', function() {
+describe('Search Item', function() {
 
   it('Login With Correct Username & Password', function() {
     browser.url('./');
+    browser.alertAccept();
     browser.click('#bt-login');
     browser.setValue('#email', 'meng46@purdue.edu');
     browser.setValue('#password', 'monikamonika123');
@@ -16,9 +17,11 @@ describe('Login and Logout', function() {
     browser.setValue('#searchBar', 'table');
     browser.keys("Enter");
     browser.pause(5000);
-    let item = browser.getText('.SPItemContainer');
-    expect(item).to.exist;
+    //let item = browser.getText('.SPItemContainer');
+    //expect(item).to.exist;
 
+    browser.click('.SPItemContainer');
+    expect('.backButton').to.exist;
   });
 /*
   it('Logout', function() {
