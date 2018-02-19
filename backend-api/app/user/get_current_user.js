@@ -1,6 +1,13 @@
 import * as dynamoDbLib from "../libs/dynamodb-lib";
 import { success, failure } from "../libs/response-lib";
-
+/**
+ * @api {get} /user/current Get information of the current user.
+ * @apiName getItemsPrice
+ * @apiGroup content
+ *  
+ * @apiSuccess {Object} "" a JSON object of user info.
+ * @apiSuccess {JSON} status false
+ */
 export async function main(event, context, callback) {
   const params = {
     TableName: "User",
@@ -18,7 +25,13 @@ export async function main(event, context, callback) {
   try {
     const result = await dynamoDbLib.call("get", params);
     // Return current user in response body
-    callback(null, success(result.Items));
+    if (result.Items.size > 1) {
+      callback(null, failure({ 
+        status: false,
+        message: "multiple user with identical id."
+       }));
+    }
+    callback(null, success(result.Items[0]));
   } catch (e) {
     callback(null, failure({ status: false }));
   }
