@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { HelpBlock, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { HelpBlock, FormGroup, FormControl } from "react-bootstrap";
 import { AuthenticationDetails, CognitoUserPool } from "amazon-cognito-identity-js";
 import { invokeApig } from "../libs/awsLib";
 
@@ -41,6 +41,11 @@ export default class Signup extends Component {
   handleSubmit = async event => {
     event.preventDefault();
 
+    if (!this.state.email.includes("@purdue.edu")) {
+      alert("Invalid: Email has be a valid Purdue email address");
+      return;
+    }
+
     this.setState({ isLoading: true });
 
     try {
@@ -78,9 +83,6 @@ export default class Signup extends Component {
   }
 
   signupDB() {
-
-    console.log(this.state.email);
-    
     return invokeApig({
       path: "/user/create",
       method: "POST",
@@ -199,6 +201,7 @@ export default class Signup extends Component {
           isLoading={this.state.isLoading}
           text="Sign up"
           loadingText="Signing up…"
+          id="submitButtonSignup"
         />
       </form>
     );

@@ -3,6 +3,7 @@ const expect = require('chai').expect;
 describe('Login and Logout', function() {
   it('Login With Correct Username & Password', function() {
     browser.url('./');
+    browser.alertAccept();
 
     browser.click('#bt-login');
     browser.setValue('#email', 'meng46@purdue.edu');
