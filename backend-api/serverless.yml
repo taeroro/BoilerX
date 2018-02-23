@@ -74,6 +74,15 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  update_item:
+    handler: app/content/update_item.main
+    events:
+      - http: 
+          path: content/{itemID}/update
+          method: put
+          cors: true
+          authorizer: aws_iam
+
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
 #    - Effect: "Allow"

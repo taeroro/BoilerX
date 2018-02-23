@@ -1,0 +1,12 @@
+{
+    "body": "{\"name\": \"Milk Drink\", \"category\": \"food\", \"price\": \"2.99\"}",
+    "pathParameters": {
+        "itemID": "0a664d00-1417-11e8-8c01-6bc7596571a5"
+    },
+    "requestContext": {
+      "identity": {
+        "cognitoIdentityId": "USER-SUB-1235"
+      }
+    }
+  }
+  

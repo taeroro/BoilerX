@@ -17,6 +17,7 @@ import { success, failure } from "../libs/response-lib";
  * @apiParam (body) {Number} [crn] CRN of the class of which use the book.
  * @apiParam (body) {String} [imageURL] url of the image in S3 bucket.
  * @apiParam (body) {String} [descr] Description of the item.
+ * @apiParam (body) {String[]} [tags] Array of tags of the item.
  * 
  * @apiSuccess {JSON} status true
  * @apiSuccess {JSON} status false
@@ -39,15 +40,16 @@ export async function main(event, context, callback) {
       name: data.name,
       searchName: String(data.name).toLowerCase(),
       popularity: 0,
-      category: data.category ? String(data.category).toLowerCase() : undefined,
-      subject: data.subject ? String(data.subject).toLowerCase() : undefined,
+      category: data.category ? String(data.category).toLowerCase() : null,
+      subject: data.subject ? String(data.subject).toLowerCase() : null,
       sellerName: data.sellerName,
       price: Number(data.price),
       crn: data.crn? Number(data.crn): null,
       // may set default in S3
       imageURL: data.imageURL,
       descr: data.descr,
-      createdAt: new Date().getTime()
+      createdAt: new Date().getTime(),
+      tags: data.tags
     }
     
   };
