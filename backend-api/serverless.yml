@@ -65,6 +65,15 @@ functions:
           cors: true
           authorizer: aws_iam 
   
+  get_item_by_id:
+    handler: app/content/get_item_by_id.main
+    events:
+      - http:
+          path: content/{itemID}
+          method: get
+          cors: true
+          authorizer: aws_iam 
+
   post_item:
     handler: app/content/post_item.main
     events:
@@ -80,6 +89,15 @@ functions:
       - http: 
           path: content/{itemID}/update
           method: put
+          cors: true
+          authorizer: aws_iam
+
+  delete_item:
+    handler: app/content/delete_item.main
+    events:
+      - http: 
+          path: content/{itemID}/delete
+          method: delete
           cors: true
           authorizer: aws_iam
 

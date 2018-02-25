@@ -35,7 +35,7 @@ export async function main(event, context, callback) {
   const params = {
     TableName: "Item",
     Item: {
-      sellerId: event.requestContext.identity.cognitoIdentityId,
+      sellerID: event.requestContext.identity.cognitoIdentityId,
       itemID: uuid.v1(),
       name: data.name,
       searchName: String(data.name).toLowerCase(),

@@ -71,7 +71,7 @@
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.main = undefined;
 
@@ -83,82 +83,54 @@ var _asyncToGenerator2 = __webpack_require__(2);
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-/**
- * @api {post} /user/create Save user information to database.
- * @apiName createUser
- * @apiGroup User
- * 
- * @apiParam {String} email Purdue email of the user.
- * @apiParam {String} username 
- * 
- * @apiSuccess {Object} "" a JSON object of user info.
- * @apiSuccess {JSON} status false
- */
 var main = exports.main = function () {
-  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(event, context, callback) {
-    var data, params;
-    return _regenerator2.default.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            // Request body is passed in as a JSON encoded string in 'event.body'
-            data = JSON.parse(event.body);
+    var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(event, context, callback) {
+        var params, result;
+        return _regenerator2.default.wrap(function _callee$(_context) {
+            while (1) {
+                switch (_context.prev = _context.next) {
+                    case 0:
+                        params = {
+                            TableName: "Item",
+                            Key: {
+                                itemID: event.pathParameters.itemID
+                            },
+                            ConditionExpression: "#sellerID = :sellerID",
+                            ExpressionAttributeNames: {
+                                "#sellerID": "sellerID"
+                            },
+                            ExpressionAttributeValues: {
+                                ":sellerID": event.requestContext.identity.cognitoIdentityId
+                            }
+                        };
+                        _context.prev = 1;
+                        _context.next = 4;
+                        return dynamoDbLib.call("delete", params);
 
-            if (!(!event.requestContext.identity.cognitoIdentityId || !data.email)) {
-              _context.next = 4;
-              break;
+                    case 4:
+                        result = _context.sent;
+
+                        callback(null, (0, _responseLib.success)({ status: true }));
+                        _context.next = 11;
+                        break;
+
+                    case 8:
+                        _context.prev = 8;
+                        _context.t0 = _context["catch"](1);
+
+                        callback(null, (0, _responseLib.failure)(_context.t0));
+
+                    case 11:
+                    case "end":
+                        return _context.stop();
+                }
             }
+        }, _callee, this, [[1, 8]]);
+    }));
 
-            //|| !data.username) {
-            callback(null, (0, _responseLib.failure)({
-              status: false,
-              message: "missing required parameters"
-            }));
-            return _context.abrupt("return");
-
-          case 4:
-            params = {
-              TableName: "User",
-              // 'Item' contains the attributes of the item to be created
-              // - 'userId': user identities are federated through the
-              //             Cognito Identity Pool, we will use the identity id
-              //             as the user id of the authenticated user
-              // - 'createdAt': current Unix timestamp
-              Item: {
-                userId: event.requestContext.identity.cognitoIdentityId,
-                email: data.email,
-                username: data.username
-                //pass: data.pass
-                //createdAt: new Date().getTime()
-              }
-
-            };
-            _context.prev = 5;
-            _context.next = 8;
-            return dynamoDbLib.call("put", params);
-
-          case 8:
-            callback(null, (0, _responseLib.success)(params.Item));
-            _context.next = 14;
-            break;
-
-          case 11:
-            _context.prev = 11;
-            _context.t0 = _context["catch"](5);
-
-            callback(null, (0, _responseLib.failure)({ status: false }));
-
-          case 14:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee, this, [[5, 11]]);
-  }));
-
-  return function main(_x, _x2, _x3) {
-    return _ref.apply(this, arguments);
-  };
+    return function main(_x, _x2, _x3) {
+        return _ref.apply(this, arguments);
+    };
 }();
 
 var _dynamodbLib = __webpack_require__(3);

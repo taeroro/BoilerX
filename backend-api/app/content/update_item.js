@@ -27,6 +27,7 @@ export async function main(event, context, callback) {
   console.log(event.pathParameters.itemID)
   //let id = 
   let update_expr = "SET #name = :name, ";
+  update_expr += "#searchName = :searchName, ";
   update_expr += "#category = :category, ";
   update_expr += "#subject = :subject, ";
   update_expr += "#price = :price, ";
@@ -45,6 +46,7 @@ export async function main(event, context, callback) {
     UpdateExpression: update_expr,
     ExpressionAttributeNames: {
       "#name": "name",
+      "#serachName": ":searchName",
       "#category": "category",
       "#subject": "subject",
       "#price": "price",
@@ -55,13 +57,14 @@ export async function main(event, context, callback) {
     },
     ExpressionAttributeValues: {
       ":name": data.name ? data.name : null,
-      ":category": data.category ? data.category : null,
-      ":subject": data.subject ? data.subject : null,
-      ":price": {'N': data.price ? data.price : null},
-      ":crn": {'N': data.crn ? data.crn : null},
+      ":searchName": data.name ? String(data.name).toLowerCase() : null,
+      ":category": data.category ? String(data.category).toLowerCase() : null,
+      ":subject": data.subject ? String(data.subject).toLowerCase() : null,
+      ":price": data.price ? data.price : null,
+      ":crn": data.crn ? data.crn : null,
       ":imageURL": data.imageURL ? data.imageURL : null,
       ":descr": data.descr ? data.descr : null,
-      ":tags": {SS: data.tags ? data.tags : null}
+      ":tags": data.tags ? data.tags : null
     },
     ReturnValues: "ALL_NEW"
   };
@@ -70,7 +73,7 @@ export async function main(event, context, callback) {
   try {
     const result = await dynamoDbLib.call("update", params);
     //console.log(result);
-    callback(null, success({ status: true }));
+    callback(null, success(result.Item));
   } catch (e) {
     console.log(e);
     callback(null, failure({ status: false }));
