@@ -71,7 +71,7 @@
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.main = undefined;
 
@@ -84,53 +84,56 @@ var _asyncToGenerator2 = __webpack_require__(2);
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var main = exports.main = function () {
-    var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(event, context, callback) {
-        var params, result;
-        return _regenerator2.default.wrap(function _callee$(_context) {
-            while (1) {
-                switch (_context.prev = _context.next) {
-                    case 0:
-                        params = {
-                            TableName: "Item",
-                            Key: {
-                                itemID: event.pathParameters.itemID
-                            },
-                            ConditionExpression: "#sellerID = :sellerID",
-                            ExpressionAttributeNames: {
-                                "#sellerID": "sellerID"
-                            },
-                            ExpressionAttributeValues: {
-                                ":sellerID": event.requestContext.identity.cognitoIdentityId
-                            }
-                        };
-                        _context.prev = 1;
-                        _context.next = 4;
-                        return dynamoDbLib.call("delete", params);
+  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(event, context, callback) {
+    var params, result;
+    return _regenerator2.default.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            params = {
+              TableName: "Item",
+              IndexName: "sellerID-itemID-index",
+              KeyConditionExpression: "#sellerID = :sellerID",
+              ExpressionAttributeNames: {
+                "#sellerID": "sellerID"
+              },
+              ExpressionAttributeValues: {
+                ":sellerID": event.requestContext.identity.cognitoIdentityId
+              }
+            };
+            _context.prev = 1;
+            _context.next = 4;
+            return dynamoDbLib.call("query", params);
 
-                    case 4:
-                        result = _context.sent;
+          case 4:
+            result = _context.sent;
 
-                        callback(null, (0, _responseLib.success)({ status: true }));
-                        _context.next = 11;
-                        break;
-
-                    case 8:
-                        _context.prev = 8;
-                        _context.t0 = _context["catch"](1);
-
-                        callback(null, (0, _responseLib.failure)(_context.t0));
-
-                    case 11:
-                    case "end":
-                        return _context.stop();
-                }
+            if (result.Items) {
+              // Return the retrieved item
+              callback(null, (0, _responseLib.success)(result.Items));
+            } else {
+              callback(null, (0, _responseLib.failure)({ status: false, error: "Item not found." }));
             }
-        }, _callee, this, [[1, 8]]);
-    }));
+            _context.next = 11;
+            break;
 
-    return function main(_x, _x2, _x3) {
-        return _ref.apply(this, arguments);
-    };
+          case 8:
+            _context.prev = 8;
+            _context.t0 = _context["catch"](1);
+
+            callback(null, (0, _responseLib.failure)(_context.t0));
+
+          case 11:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, this, [[1, 8]]);
+  }));
+
+  return function main(_x, _x2, _x3) {
+    return _ref.apply(this, arguments);
+  };
 }();
 
 var _dynamodbLib = __webpack_require__(3);

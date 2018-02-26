@@ -24,8 +24,7 @@ import { success, failure } from "../libs/response-lib";
 export async function main(event, context, callback) {
   // Request body is passed in as a JSON encoded string in 'event.body'
   const data = JSON.parse(event.body);
-  console.log(event.pathParameters.itemID)
-  //let id = 
+
   let update_expr = "SET #name = :name, ";
   update_expr += "#searchName = :searchName, ";
   update_expr += "#category = :category, ";
@@ -46,7 +45,7 @@ export async function main(event, context, callback) {
     UpdateExpression: update_expr,
     ExpressionAttributeNames: {
       "#name": "name",
-      "#serachName": ":searchName",
+      "#searchName": ":searchName",
       "#category": "category",
       "#subject": "subject",
       "#price": "price",

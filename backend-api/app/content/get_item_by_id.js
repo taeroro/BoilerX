@@ -7,7 +7,7 @@ export async function main(event, context, callback) {
     TableName: "Item",
     Key: {
         itemID: event.pathParameters.itemID
-      }
+    }
   };
 
   try {
