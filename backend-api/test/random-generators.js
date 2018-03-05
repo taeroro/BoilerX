@@ -1,26 +1,26 @@
-import uuid from "uuid";
-import randomString from "randomstring";
+let uuid = require("uuid");
+let randomString = require("randomstring");
 
 let userID = function () {
     return uuid.v1();
 };
 
 let userName = function (len) {
-    return randomString({
+    return randomString.generate({
         length: len,
         charset: 'alphanumeric'
     });
 };
 
 let email = function (len) {
-    return randomString({
+    return randomString.generate({
         length: len,
         charset: 'alphanumeric'
     }) + '@test.cc';
 };
 
 let pass = function (len) {
-    return randomString({
+    return randomString.generate({
         length: len,
         charset: '[a-zA-Z0-9,.?!@#%*]'
     });
@@ -68,8 +68,8 @@ let tags = function () {
     let numOfTag = Math.floor(Math.random() * 21);
     let arr = [];
     for (let i = 0; i < numOfTag; i++) {
-        arr.push(randomString({
-            length: len,
+        arr.push(randomString.generate({
+            length: Math.floor(Math.random() * 20),
             charset: 'alphabetic',
             capitalization: 'lowercase'
         }));
@@ -85,7 +85,10 @@ let price = function () {
 let bool = function () {
     return Math.random() >= 0.5;
 }
-
+let index = function (len) {
+    //generate (100 to 600)*100
+    return Math.floor(Math.random() * len);
+};
 module.exports = {
     userID,
     userName,
@@ -96,5 +99,6 @@ module.exports = {
     crn,
     tags,
     price,
-    bool
+    bool,
+    index
 }

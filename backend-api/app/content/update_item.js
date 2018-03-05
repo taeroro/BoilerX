@@ -40,8 +40,7 @@ export async function main(event, context, callback) {
     Key: {
       itemID: event.pathParameters.itemID
     },
-    // 'UpdateExpression' defines the attributes to be updated
-    // 'ExpressionAttributeValues' defines the value in the update expression
+    ConditionExpression: 'itemID = :itemIDVal',
     UpdateExpression: update_expr,
     ExpressionAttributeNames: {
       "#name": "name",
@@ -55,15 +54,16 @@ export async function main(event, context, callback) {
       "#tags": "tags"
     },
     ExpressionAttributeValues: {
+      ":itemIDVal": event.pathParameters.itemID,
       ":name": data.name ? data.name : null,
       ":searchName": data.name ? String(data.name).toLowerCase() : null,
       ":category": data.category ? String(data.category).toLowerCase() : null,
       ":subject": data.subject ? String(data.subject).toLowerCase() : null,
-      ":price": data.price ? data.price : null,
-      ":crn": data.crn ? data.crn : null,
+      ":price": data.price ? Number(data.price) : null,
+      ":crn": data.crn ? Number(data.crn) : null,
       ":imageURL": data.imageURL ? data.imageURL : null,
       ":descr": data.descr ? data.descr : null,
-      ":tags": data.tags ? data.tags : null
+      ":tags": data.tags ? dynamoDbLib.createSet(data.tags) : null
     },
     ReturnValues: "ALL_NEW"
   };
@@ -72,7 +72,7 @@ export async function main(event, context, callback) {
   try {
     const result = await dynamoDbLib.call("update", params);
     //console.log(result);
-    callback(null, success(result.Item));
+    callback(null, success(result));
   } catch (e) {
     console.log(e);
     callback(null, failure({ status: false }));

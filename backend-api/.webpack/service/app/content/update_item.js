@@ -83,52 +83,107 @@ var _asyncToGenerator2 = __webpack_require__(2);
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
+/**
+ * @apiDefine body parameter from request body
+ */
+/**
+ * @api {post} /content/post post an item for sell.
+ * @apiName postItem
+ * @apiGroup content
+ * @apiParam (body) {String} itmeID Unique item id assigned when the item is posted.
+ * @apiParam (body) {String} [name] Name of the item.
+ * @apiParam (body) {String} [category] Category of the item. later we shall predefine our categories.
+ * @apiParam (body) {String} [subject] Subject of the item.
+ * @apiParam (body) {String} [sellerName] Seller's name. Please call user/current to get the username.
+ * @apiParam (body) {String} [price] Price of the item.
+ * @apiParam (body) {Number} [crn] CRN of the class of which use the book.
+ * @apiParam (body) {String} [imageURL] url of the image in S3 bucket.
+ * @apiParam (body) {String} [descr] Description of the item.
+ * @apiParam (body) {String[]} [tags] Array of tags of the item.
+ * 
+ * @apiSuccess {JSON} status true
+ * @apiSuccess {JSON} status false
+ */
 var main = exports.main = function () {
   var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(event, context, callback) {
-    var params, result;
+    var data, update_expr, params, result;
     return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
+            // Request body is passed in as a JSON encoded string in 'event.body'
+            data = JSON.parse(event.body);
+            update_expr = "SET #name = :name, ";
+
+            update_expr += "#searchName = :searchName, ";
+            update_expr += "#category = :category, ";
+            update_expr += "#subject = :subject, ";
+            update_expr += "#price = :price, ";
+            update_expr += "#crn = :crn, ";
+            update_expr += "#imageURL = :imageURL, ";
+            update_expr += "#descr = :descr, ";
+            update_expr += "#tags = :tags";
             params = {
               TableName: "Item",
-              IndexName: "sellerID-itemID-index",
-              KeyConditionExpression: "#sellerID = :sellerID",
+              // 'Key' defines the partition key and sort key of the item to be updated
+              Key: {
+                itemID: event.pathParameters.itemID
+              },
+              ConditionExpression: 'itemID = :itemIDVal',
+              UpdateExpression: update_expr,
               ExpressionAttributeNames: {
-                "#sellerID": "sellerID"
+                "#name": "name",
+                "#searchName": ":searchName",
+                "#category": "category",
+                "#subject": "subject",
+                "#price": "price",
+                "#crn": "crn",
+                "#imageURL": "imageURL",
+                "#descr": "descr",
+                "#tags": "tags"
               },
               ExpressionAttributeValues: {
-                ":sellerID": event.requestContext.identity.cognitoIdentityId
-              }
+                ":itemIDVal": event.pathParameters.itemID,
+                ":name": data.name ? data.name : null,
+                ":searchName": data.name ? String(data.name).toLowerCase() : null,
+                ":category": data.category ? String(data.category).toLowerCase() : null,
+                ":subject": data.subject ? String(data.subject).toLowerCase() : null,
+                ":price": data.price ? Number(data.price) : null,
+                ":crn": data.crn ? Number(data.crn) : null,
+                ":imageURL": data.imageURL ? data.imageURL : null,
+                ":descr": data.descr ? data.descr : null,
+                ":tags": data.tags ? dynamoDbLib.createSet(data.tags) : null
+              },
+              ReturnValues: "ALL_NEW"
             };
-            _context.prev = 1;
-            _context.next = 4;
-            return dynamoDbLib.call("query", params);
 
-          case 4:
+
+            console.log(params);
+            _context.prev = 12;
+            _context.next = 15;
+            return dynamoDbLib.call("update", params);
+
+          case 15:
             result = _context.sent;
 
-            if (result.Items) {
-              // Return the retrieved item
-              callback(null, (0, _responseLib.success)(result.Items));
-            } else {
-              callback(null, (0, _responseLib.failure)({ status: false, error: "Item not found." }));
-            }
-            _context.next = 11;
+            //console.log(result);
+            callback(null, (0, _responseLib.success)(result));
+            _context.next = 23;
             break;
 
-          case 8:
-            _context.prev = 8;
-            _context.t0 = _context["catch"](1);
+          case 19:
+            _context.prev = 19;
+            _context.t0 = _context["catch"](12);
 
-            callback(null, (0, _responseLib.failure)(_context.t0));
+            console.log(_context.t0);
+            callback(null, (0, _responseLib.failure)({ status: false }));
 
-          case 11:
+          case 23:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, this, [[1, 8]]);
+    }, _callee, this, [[12, 19]]);
   }));
 
   return function main(_x, _x2, _x3) {

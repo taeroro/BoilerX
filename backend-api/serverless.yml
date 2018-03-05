@@ -82,7 +82,7 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
-
+        
   update_item:
     handler: app/content/update_item.main
     events:
@@ -106,10 +106,19 @@ functions:
     events:
       - http: 
           path: user/profile
+          method: put
+          cors: true
+          authorizer: aws_iam
+
+  get_profile:
+    handler: app/user/get_profile.main
+    events:
+      - http: 
+          path: user/profile
           method: get
           cors: true
           authorizer: aws_iam
-  
+
   update_password:
     handler: app/user/update_pass.main
     events:
@@ -118,6 +127,7 @@ functions:
           method: put
           cors: true
           authorizer: aws_iam
+
   get_items_by_user:
     handler: app/user/get_items_by_owner.main
     events:

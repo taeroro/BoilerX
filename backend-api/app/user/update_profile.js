@@ -13,25 +13,23 @@ export async function main(event, context, callback) {
     Key: {
         userId: event.requestContext.identity.cognitoIdentityId
     },
-    // 'UpdateExpression' defines the attributes to be updated
-    // 'ExpressionAttributeValues' defines the value in the update expression
+    ConditionExpression: 'userId = :userIdVal',
     UpdateExpression: update_expr,
     ExpressionAttributeNames: {
-      "#usesrname": "username",
+      "#username": "username",
       "#imageURL": "imageURL"
     },
     ExpressionAttributeValues: {
+      ":userIdVal": event.requestContext.identity.cognitoIdentityId,
       ":username": data.username ? data.username : null,
       ":imageURL": data.imageURL ? data.imageURL : null
     },
     ReturnValues: "ALL_NEW"
   };
 
-  console.log(params);
   try {
     const result = await dynamoDbLib.call("update", params);
-    //console.log(result);
-    callback(null, success(result.Item));
+    callback(null, success(result));
   } catch (e) {
     console.log(e);
     callback(null, failure({ status: false }));
