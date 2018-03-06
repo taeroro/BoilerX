@@ -9,6 +9,8 @@ import RouteNavItem from "./components/RouteNavItem";
 import HomePage from "./components/home_page";
 import SearchBar from './containers/search_bar';
 
+export const S3_PREFIX_URL = 'https://s3.amazonaws.com/boilerx-app/';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +56,7 @@ class App extends Component {
       userHasAuthenticated: this.userHasAuthenticated,
       searchItems: this.state.searchItems
     };
-    const logoImgLink = "src/img/BoilerX_logo-01.svg";
+    const logoImgLink = `${S3_PREFIX_URL}public_img/BoilerX_logo-01.svg`;
 
     return (
       !this.state.isAuthenticating &&
