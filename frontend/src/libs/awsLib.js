@@ -51,14 +51,14 @@ export async function invokeApig({
   return results.json();
 }
 
-export async function s3Upload(file) {
+export async function s3Upload(file, folder) {
   if (!await authUser()) {
     throw new Error("User is not logged in");
   }
 
   const s3 = new AWS.S3({
     params: {
-      Bucket: config.s3.BUCKET
+      Bucket: config.s3.BUCKET + "/" + folder
     }
   });
   const filename = `${AWS.config.credentials

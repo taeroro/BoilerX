@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { HelpBlock, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import { invokeApig } from "../libs/awsLib";
-
+import { invokeApig, s3Upload } from "../libs/awsLib";
+import config from "../config";
 import LoaderButton from "../components/LoaderButton";
 
 class EditProfile extends Component {
@@ -13,6 +13,8 @@ class EditProfile extends Component {
       user: null,
       username: ""
     };
+
+    this.file = null;
   }
   async componentDidMount() {
     try {
@@ -40,11 +42,16 @@ class EditProfile extends Component {
     });
   }
 
+  handleFileChange = event => {
+    this.file = event.target.files[0];
+  }
+
   handleSubmit = async event => {
     event.preventDefault();
 
     this.setState({ isLoading: true });
 
+/*
     try {
       const newUser = await this.updateProfile();
       // this.setState({
@@ -53,15 +60,37 @@ class EditProfile extends Component {
     } catch (e) {
       alert(e);
     }
+*/
+
+    // upload picture to S3
+    if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
+      alert("Please pick a file smaller than 5MB");
+      return;
+    }
+
+    this.setState({ isLoading: true });
+
+    try {
+      const uploadedFilename = this.file
+        ? (await s3Upload(this.file, "user_img")).Location
+        : null;
+
+      await this.updateProfile(uploadedFilename);
+      //this.props.history.push("/");
+    } catch (e) {
+      alert(e);
+      this.setState({ isLoading: false });
+    }
+    // end of uploading picture to S3
 
     this.setState({ isLoading: false });
   }
 
-  updateProfile() {
+  updateProfile(imageURL) {
     return invokeApig({
       path: "/user/profile",
       method: "PUT",
-      body: { username: this.state.username }
+      body: { username: this.state.username, imageURL: imageURL}
     });
   }
 
@@ -100,6 +129,13 @@ class EditProfile extends Component {
           </div>
           <p className="descrLabel">You can’t modify the date you joined.</p>
         </div>
+        <FormGroup controlId="file">
+          <ControlLabel>Attachment</ControlLabel>
+          <FormControl onChange={this.handleFileChange} type="file" />
+        </FormGroup>
+        <FormGroup>
+          <img height="200px" width="200px" src={this.state.user ? this.state.user.imageURL : "" } />
+        </FormGroup>
         <LoaderButton
           className="saveButton signupBtn"
           block
