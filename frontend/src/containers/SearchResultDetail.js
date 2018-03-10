@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import FadeIn from 'react-fade-in';
 
+import { invokeApig } from "../libs/awsLib";
 import { S3_PREFIX_URL } from '../App';
 import LoaderButton from "../components/LoaderButton";
 
@@ -9,13 +10,31 @@ class SearchResultDetail extends Component {
   constructor(props) {
     super(props);
 
-    // console.log(props);
-    // this.state.itemID
-
     this.state = {
       itemID: props.match.params.id,
+      item: null,
+      seller: null,
       isLoading: false
     };
+  }
+
+  async componentDidMount() {
+    try {
+      const results = await this.fetchItem();
+      
+      this.setState({
+        item: results
+      });
+    } catch (e) {
+      alert(e);
+    }
+  }
+
+  fetchItem() {
+    return invokeApig({
+      path: "/content/" + this.state.itemID,
+      method: "GET"
+    });
   }
 
   renderBackNTag() {
@@ -42,33 +61,29 @@ class SearchResultDetail extends Component {
   }
 
   renderTitleNDetail() {
-    // TODO: GET single item by calling API function created by mushroom
-    // TODO: Popluar item check and display
-
-    const title = "Bamboo Table";
-    const views = "2052" + " views";
-    const roundedPrice = parseFloat(Math.round(32.99 * 100) / 100).toFixed(2);
-    const price = "$ " + roundedPrice;
-
     return (
       <div className="title-n-detail col-lg-4">
-        <h1 className="item-detail-title">{title}</h1>
-        <div className="sub-title-container">
-          <span className="detail-views">{views}</span>
-          {/* TODO: display popluar item */}
+        {this.state.item &&
+          <div>
+            <h1 className="item-detail-title">{this.state.item.name}</h1>
+            <div className="sub-title-container">
+              <span className="detail-views">{this.state.item.popularity + " views"}</span>
+              {/* TODO: display popluar item */}
 
-        </div>
-        <div className="price-n-buy-btn-container">
-          <span className="detail-price">{price}</span>
-          <LoaderButton
-            className="buy-button"
-            type="submit"
-            isLoading={this.state.isLoading}
-            text="Buy"
-            loadingText="Loading..."
-            id="submitButtonBuy"
-          />
-        </div>
+            </div>
+            <div className="price-n-buy-btn-container">
+              <span className="detail-price">{"$ " + parseFloat(Math.round(this.state.item.price * 100) / 100).toFixed(2)}</span>
+              <LoaderButton
+                className="buy-button"
+                type="submit"
+                isLoading={this.state.isLoading}
+                text="Buy"
+                loadingText="Loading..."
+                id="submitButtonBuy"
+              />
+            </div>
+          </div>
+        }
       </div>
     );
   }
@@ -108,7 +123,7 @@ class SearchResultDetail extends Component {
 
     return (
       <div className="item-descr-container col-md-12">
-        <h2 className="item-descr-label">Description: </h2>
+        <h2 className="item-descr-label">Item Description: </h2>
         <p className="item-descr-body">{itemDescr}</p>
       </div>
     );
