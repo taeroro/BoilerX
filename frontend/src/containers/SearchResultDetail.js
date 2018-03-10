@@ -6,6 +6,7 @@ import { invokeApig } from "../libs/awsLib";
 import { S3_PREFIX_URL } from '../App';
 import LoaderButton from "../components/LoaderButton";
 
+
 class SearchResultDetail extends Component {
   constructor(props) {
     super(props);
