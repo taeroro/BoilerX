@@ -2,24 +2,24 @@ import * as dynamoDbLib from "../libs/dynamodb-lib";
 import { success, failure } from "../libs/response-lib";
 
 export async function main(event, context, callback) {
+  
   const params = {
-    TableName: "User",
+    TableName: "Item",
     Key: {
-      ":userId": event.requestContext.identity.cognitoIdentityId
+        itemID: event.pathParameters.itemID
     }
   };
 
   try {
     const result = await dynamoDbLib.call("get", params);
-    // Return current user in response body
-    if (result.Items.size > 1) {
-      callback(null, failure({ 
-        status: false,
-        message: "multiple user with identical id."
-       }));
+    if (result.Item) {
+      // Return the retrieved item
+      callback(null, success(result.Item));
+    } else {
+      callback(null, failure({ status: false, error: "Item not found." }));
     }
-    callback(null, success(result.Items[0]));
   } catch (e) {
     callback(null, failure({ status: false }));
   }
+
 }

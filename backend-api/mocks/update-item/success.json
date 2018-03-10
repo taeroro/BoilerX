@@ -1,0 +1,1 @@
+{"body":"{\"name\":null,\"category\":null,\"subject\":\"geometry\",\"price\":null,\"crn\":null,\"descr\":null,\"tag\":null,\"imageURL\":null}","pathParameters":{"itemID":"test-mush"},"requestContext":{"identity":{"cognitoIdentityId":"USER-SUB-1234"}}}

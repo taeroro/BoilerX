@@ -84,76 +84,106 @@ var _asyncToGenerator2 = __webpack_require__(2);
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 /**
- * @api {post} /user/create Save user information to database.
- * @apiName createUser
- * @apiGroup User
+ * @apiDefine body parameter from request body
+ */
+/**
+ * @api {post} /content/post post an item for sell.
+ * @apiName postItem
+ * @apiGroup content
+ * @apiParam (body) {String} itmeID Unique item id assigned when the item is posted.
+ * @apiParam (body) {String} [name] Name of the item.
+ * @apiParam (body) {String} [category] Category of the item. later we shall predefine our categories.
+ * @apiParam (body) {String} [subject] Subject of the item.
+ * @apiParam (body) {String} [sellerName] Seller's name. Please call user/current to get the username.
+ * @apiParam (body) {String} [price] Price of the item.
+ * @apiParam (body) {Number} [crn] CRN of the class of which use the book.
+ * @apiParam (body) {String} [imageURL] url of the image in S3 bucket.
+ * @apiParam (body) {String} [descr] Description of the item.
+ * @apiParam (body) {String[]} [tags] Array of tags of the item.
  * 
- * @apiParam {String} email Purdue email of the user.
- * @apiParam {String} username 
- * 
- * @apiSuccess {Object} "" a JSON object of user info.
+ * @apiSuccess {JSON} status true
  * @apiSuccess {JSON} status false
  */
 var main = exports.main = function () {
   var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(event, context, callback) {
-    var data, params;
+    var data, update_expr, params, result;
     return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             // Request body is passed in as a JSON encoded string in 'event.body'
             data = JSON.parse(event.body);
+            update_expr = "SET #name = :name, ";
 
-            if (!(!event.requestContext.identity.cognitoIdentityId || !data.email)) {
-              _context.next = 4;
-              break;
-            }
-
-            //|| !data.username) {
-            callback(null, (0, _responseLib.failure)({
-              status: false,
-              message: "missing required parameters"
-            }));
-            return _context.abrupt("return");
-
-          case 4:
+            update_expr += "#searchName = :searchName, ";
+            update_expr += "#category = :category, ";
+            update_expr += "#subject = :subject, ";
+            update_expr += "#price = :price, ";
+            update_expr += "#crn = :crn, ";
+            update_expr += "#imageURL = :imageURL, ";
+            update_expr += "#descr = :descr, ";
+            update_expr += "#tags = :tags";
             params = {
-              TableName: "User",
-              // 'Item' contains the attributes of the item to be created
-              // - 'userId': user identities are federated through the
-              //             Cognito Identity Pool, we will use the identity id
-              //             as the user id of the authenticated user
-              // - 'createdAt': current Unix timestamp
-              Item: {
-                userId: event.requestContext.identity.cognitoIdentityId,
-                email: data.email,
-                username: data.username
-                //pass: data.pass
-                //createdAt: new Date().getTime()
-              }
-
+              TableName: "Item",
+              // 'Key' defines the partition key and sort key of the item to be updated
+              Key: {
+                itemID: event.pathParameters.itemID
+              },
+              ConditionExpression: 'itemID = :itemIDVal',
+              UpdateExpression: update_expr,
+              ExpressionAttributeNames: {
+                "#name": "name",
+                "#searchName": ":searchName",
+                "#category": "category",
+                "#subject": "subject",
+                "#price": "price",
+                "#crn": "crn",
+                "#imageURL": "imageURL",
+                "#descr": "descr",
+                "#tags": "tags"
+              },
+              ExpressionAttributeValues: {
+                ":itemIDVal": event.pathParameters.itemID,
+                ":name": data.name ? data.name : null,
+                ":searchName": data.name ? String(data.name).toLowerCase() : null,
+                ":category": data.category ? String(data.category).toLowerCase() : null,
+                ":subject": data.subject ? String(data.subject).toLowerCase() : null,
+                ":price": data.price ? Number(data.price) : null,
+                ":crn": data.crn ? Number(data.crn) : null,
+                ":imageURL": data.imageURL ? data.imageURL : null,
+                ":descr": data.descr ? data.descr : null,
+                ":tags": data.tags ? dynamoDbLib.createSet(data.tags) : null
+              },
+              ReturnValues: "ALL_NEW"
             };
-            _context.prev = 5;
-            _context.next = 8;
-            return dynamoDbLib.call("put", params);
 
-          case 8:
-            callback(null, (0, _responseLib.success)(params.Item));
-            _context.next = 14;
+
+            console.log(params);
+            _context.prev = 12;
+            _context.next = 15;
+            return dynamoDbLib.call("update", params);
+
+          case 15:
+            result = _context.sent;
+
+            //console.log(result);
+            callback(null, (0, _responseLib.success)(result));
+            _context.next = 23;
             break;
 
-          case 11:
-            _context.prev = 11;
-            _context.t0 = _context["catch"](5);
+          case 19:
+            _context.prev = 19;
+            _context.t0 = _context["catch"](12);
 
+            console.log(_context.t0);
             callback(null, (0, _responseLib.failure)({ status: false }));
 
-          case 14:
+          case 23:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, this, [[5, 11]]);
+    }, _callee, this, [[12, 19]]);
   }));
 
   return function main(_x, _x2, _x3) {

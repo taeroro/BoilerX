@@ -6,6 +6,7 @@
   2. Sign Up & Login
   3. Search Page & Search Page Items
   4. Searched Item Detail Page
+  5. Profile Page
   ========================
 **/
 /* ============================================ */
@@ -15,7 +16,7 @@
   border-radius: 0 !important;
   margin-bottom: 0 !important;
   border: none !important;
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
 }
 .navbar-brand {
   min-height: 68px !important;
@@ -62,7 +63,7 @@
   width: 45vw !important;
   border-radius: 3px;
   border: none !important;
-  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.3);
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
   letter-spacing: 2px;
@@ -517,6 +518,132 @@
   letter-spacing: 1px;
   font-size: 18px;
 }
+/* ============================================ */
+/* 5. Profile Page */
+.profile-page-container {
+  padding: 0 !important;
+  margin: 0 0 !important;
+}
+.side-panel {
+  height: 100vh;
+  box-shadow: 2px 0px 5px 0px rgba(0, 0, 0, 0.3);
+  padding: 60px 0px !important;
+}
+.bt-profile-panel {
+  width: 100%;
+  padding: 20px 0px 20px 50px;
+  margin-bottom: 20px;
+  text-align: left;
+  color: #4D4D4D;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200;
+  letter-spacing: 2px;
+  font-size: 20px;
+}
+.bt-profile-panel:focus { outline:0; }
+.bt-panel-clicked {
+  -webkit-transition-duration: all 0.3s;
+  transition: all 0.3s;
+  color: white;
+  background-color: #996CFD;
+  box-shadow: 0px 2px 5px 2px rgba(0,0,0,0.2);
+}
+
+/* 5. Edit Profile Page */
+.edit-profile-container {
+  padding: 70px !important;
+  margin: 0 0 !important;
+  height: 100%;
+}
+.editLabel {
+  display: inline-block;
+  width: 150px;
+  text-align: right;
+  color: #4D4D4D;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  letter-spacing: 1px;
+  font-size: 17px;
+}
+.editField {
+  display: inline-block !important;
+  width: 460px !important;
+  height: 45px !important;
+  border-radius: 50px !important;
+  margin-left: 20px;
+  padding-left: 20px !important;
+  border-color: #AAA !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200 !important;
+  letter-spacing: 1px !important;
+}
+.editFieldPLUS {
+  background-color: #AAAAAA;
+  color: #FFF;
+}
+.editFieldPLUS > span {
+  line-height: 45px;
+  vertical-align: middle;
+}
+.descrLabel {
+  display: block;
+  width: 440px !important;
+  color: #767676;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200;
+  letter-spacing: 1px;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-left: 180px;
+  margin-bottom: 40px;
+}
+.saveButton {
+  margin-top: 20px !important;
+  width: 100px !important;
+  height: 45px !important;
+  margin: 40px auto auto auto !important;
+  padding: 10px 30px !important;
+  border-radius: 50px !important;
+  border: none !important;
+  color: #FFF !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300 !important;
+  letter-spacing: 2px !important;
+}
+.saveButton:focus { outline:none !important; }
+
+/* 5. Sell page */
+.sell-page-container {
+  padding: 0px 70px !important;
+  margin: 0 0 !important;
+  height: 100%;
+}
+.sellItemImg {
+  width: 230px;
+  height: 230px;
+}
+.sellItemContainer {
+  margin-top: 80px;
+  display: inline-block;
+  width: 230px;
+  text-align: left;
+  box-shadow: 0px 2px 8px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.cancelContainerFluidMargin {
+  margin: 0;
+}
+.edit-item-btn {
+  width: 230px;
+  height: 40px;
+  color: #FFF;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300 !important;
+  letter-spacing: 2px !important;
+  background: linear-gradient(to right,  rgb(58, 202, 253), rgb(26, 161, 236)) !important;
+}
+.edit-item-btn:focus { outline:none !important; }
 /* ============================================ */
 /* Remove all button defualt styles */
 input, button, submit { border: none; }
