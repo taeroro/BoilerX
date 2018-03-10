@@ -2,7 +2,7 @@ export default {
   MAX_ATTACHMENT_SIZE: 5000000,
 
   s3: {
-    BUCKET: "notes-app-uploads"
+    BUCKET: "boilerx-app"
   },
 
   apiGateway: {
