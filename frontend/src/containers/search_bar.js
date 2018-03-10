@@ -41,7 +41,7 @@ class SearchBar extends Component {
       // TODO: change the request when backend is configured
       path: "/content",
       method: "GET",
-      queryParams: { keyword: term }
+      // query: { keyword: term }
     });
   }
 

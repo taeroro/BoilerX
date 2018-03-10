@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Nav, NavItem, Navbar } from "react-bootstrap";
+import { Nav, NavItem, Navbar, DropdownButton, MenuItem } from "react-bootstrap";
 import { authUser, signOutUser } from "./libs/awsLib";
 
 // non-pacakges
 import Routes from "./Routes";
 import RouteNavItem from "./components/RouteNavItem";
 import HomePage from "./components/home_page";
-import SearchBar from './containers/search_bar';
+import SearchBar from "./containers/search_bar";
+
+export const S3_PREFIX_URL = 'https://s3.amazonaws.com/boilerx-app/';
 
 class App extends Component {
   constructor(props) {
@@ -54,7 +56,7 @@ class App extends Component {
       userHasAuthenticated: this.userHasAuthenticated,
       searchItems: this.state.searchItems
     };
-    const logoImgLink = "src/img/BoilerX_logo-01.svg";
+    const logoImgLink = `${S3_PREFIX_URL}public_img/BoilerX_logo-01.svg`;
 
     return (
       !this.state.isAuthenticating &&
@@ -72,10 +74,22 @@ class App extends Component {
             />
             <div className="buttonContainer">
               {this.state.isAuthenticated
-                ? <button
-                  className="nav-item"
-                  id="bt-login"
-                  onClick={this.handleLogout}>Logout</button>
+                // ? <button
+                //   className="nav-item"
+                //   id="bt-login"
+                //   onClick={this.handleLogout}>Logout</button>
+                ? <DropdownButton
+                    title="Profile"
+                    key="0" id="dropdown-basic-0" noCaret pullRight>
+                    <MenuItem eventKey="1">
+                      <RouteNavItem key={3} href="/profile" id="bt-profile">
+                        Profile & Items
+                      </RouteNavItem>
+                    </MenuItem>
+                    <MenuItem eventKey="2" onClick={this.handleLogout}>
+                      Logout
+                    </MenuItem>
+                  </DropdownButton>
                 : [
                     <RouteNavItem key={2} href="/login" id="bt-login">
                       Login

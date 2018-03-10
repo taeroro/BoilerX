@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 
 // non-packages
 import PopularItems from '../containers/pop_items';
+import { S3_PREFIX_URL } from '../App';
 
 class HomePage extends Component {
   render() {
-    const artImgLink = "src/img/homePageArts.svg";
+    const artImgLink = `${S3_PREFIX_URL}public_img/homePageArts.svg`;
 
     return (
       <div>
