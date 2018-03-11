@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
 
-export default class SellItemContainer extends Component {
+class SellItemContainer extends Component {
   renderImage() {
     // TODO: change this line when the item has url in DB
     const itemImgURL = "src/img/hilver-table__0307336_PE427543_S4.JPG";
@@ -26,7 +27,11 @@ export default class SellItemContainer extends Component {
   }
 
   renderEditBtn() {
-    return (<button className="edit-item-btn">Edit</button>);
+    return (
+      <Link to={"/edit_item/" + this.props.itemInfo.itemID}>
+        <button className="edit-item-btn">Edit</button>
+      </Link>
+    );
   }
 
   render() {
@@ -45,3 +50,5 @@ export default class SellItemContainer extends Component {
     );
   }
 }
+
+export default withRouter(SellItemContainer);

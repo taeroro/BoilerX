@@ -82,10 +82,6 @@ class App extends Component {
             />
             <div className="buttonContainer">
               {this.state.isAuthenticated
-                // ? <button
-                //   className="nav-item"
-                //   id="bt-login"
-                //   onClick={this.handleLogout}>Logout</button>
                 ? <DropdownButton
                     title="Profile"
                     key="0" id="dropdown-basic-0" noCaret pullRight>
@@ -94,7 +90,12 @@ class App extends Component {
                         Profile & Items
                       </RouteNavItem>
                     </MenuItem>
-                    <MenuItem eventKey="2" onClick={this.handleLogout}>
+                    <MenuItem eventKey="2">
+                      <RouteNavItem key={5} href="/sell_item" id="bt-sell">
+                        Sell Item
+                      </RouteNavItem>
+                    </MenuItem>
+                    <MenuItem eventKey="3" onClick={this.handleLogout}>
                       Logout
                     </MenuItem>
                   </DropdownButton>

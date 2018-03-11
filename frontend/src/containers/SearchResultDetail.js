@@ -24,6 +24,8 @@ class SearchResultDetail extends Component {
     try {
       const results = await this.fetchItem();
 
+      console.log(results);
+
       this.setState({
         item: results
       });
@@ -86,7 +88,6 @@ class SearchResultDetail extends Component {
     // Handle promise's fulfilled/rejected states
     sendPromise.then(
      function(data) {
-       console.log(data.MessageId);
        alert("The seller has been notified via email with the your contact information!");
      }).catch(
        function(err) {
@@ -106,7 +107,7 @@ class SearchResultDetail extends Component {
         <Link className="backButton" to="/search">
           <img className="backBT-img" src={backImgLink} />
         </Link>
-        <span className="backnTag">Back | Tags:</span>
+        <span className="backnTag">Back</span>
       </div>
     );
   }
@@ -181,12 +182,15 @@ class SearchResultDetail extends Component {
   }
 
   renderDescr() {
-    const itemDescr = "This desk is made of bamboo which is a durable, renewable and sustainable material.";
+    // const itemDescr = "This desk is made of bamboo which is a durable, renewable and sustainable material.";
 
     return (
       <div className="item-descr-container col-md-12">
         <h2 className="item-descr-label">Item Description: </h2>
-        <p className="item-descr-body">{itemDescr}</p>
+        <p className="item-descr-body">{this.state.item
+          ?
+            this.state.item.descr == null ? "Unavailable" : this.state.item.descr
+          :  "Loading..." }</p>
       </div>
     );
   }

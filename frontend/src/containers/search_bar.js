@@ -27,8 +27,6 @@ class SearchBar extends Component {
       try {
         const results = await this.fetchItem();
 
-        console.log(results);
-
         this.props.callbackFromParent(results);
         this.props.callbackFromParent1(this.state.term);
 
