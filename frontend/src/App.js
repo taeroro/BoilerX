@@ -18,7 +18,8 @@ class App extends Component {
     this.state = {
       isAuthenticated: false,
       isAuthenticating: true,
-      searchItems: []
+      searchItems: [],
+      searchTerm: ""
     };
   }
 
@@ -50,11 +51,17 @@ class App extends Component {
     this.setState({ searchItems: searchItems });
   }
 
+  termCallBack = searchTerm => {
+    console.log(searchTerm);
+    this.setState({ searchTerm: searchTerm });
+  }
+
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
       userHasAuthenticated: this.userHasAuthenticated,
-      searchItems: this.state.searchItems
+      searchItems: this.state.searchItems,
+      searchTerm: this.state.searchTerm
     };
     const logoImgLink = `${S3_PREFIX_URL}public_img/BoilerX_logo-01.svg`;
 
@@ -71,6 +78,7 @@ class App extends Component {
             <SearchBar
               isHomePage={this.props.location.pathname == "/" ? true : false}
               callbackFromParent={this.searchTermCallback}
+              callbackFromParent1={this.termCallBack}
             />
             <div className="buttonContainer">
               {this.state.isAuthenticated
