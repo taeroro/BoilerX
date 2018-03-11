@@ -9,7 +9,6 @@ class SearchBar extends Component {
 
     this.state = {
       term: '',
-      // submitCount: 0
     };
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -23,9 +22,6 @@ class SearchBar extends Component {
   /* submit form function */
   onFormSubmit = async event => {
     event.preventDefault();
-
-    // this.setState({ submitCount: this.state.submitCount + 1 })
-    // console.log(this.state.submitCount);
 
     ReactDOM.findDOMNode(this).querySelector('.searchBar').blur();
 
