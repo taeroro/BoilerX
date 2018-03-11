@@ -18,7 +18,8 @@ class App extends Component {
     this.state = {
       isAuthenticated: false,
       isAuthenticating: true,
-      searchItems: []
+      searchItems: [],
+      searchTerm: ""
     };
   }
 
@@ -50,11 +51,17 @@ class App extends Component {
     this.setState({ searchItems: searchItems });
   }
 
+  termCallBack = searchTerm => {
+    console.log(searchTerm);
+    this.setState({ searchTerm: searchTerm });
+  }
+
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
       userHasAuthenticated: this.userHasAuthenticated,
-      searchItems: this.state.searchItems
+      searchItems: this.state.searchItems,
+      searchTerm: this.state.searchTerm
     };
     const logoImgLink = `${S3_PREFIX_URL}public_img/BoilerX_logo-01.svg`;
 
@@ -71,13 +78,10 @@ class App extends Component {
             <SearchBar
               isHomePage={this.props.location.pathname == "/" ? true : false}
               callbackFromParent={this.searchTermCallback}
+              callbackFromParent1={this.termCallBack}
             />
             <div className="buttonContainer">
               {this.state.isAuthenticated
-                // ? <button
-                //   className="nav-item"
-                //   id="bt-login"
-                //   onClick={this.handleLogout}>Logout</button>
                 ? <DropdownButton
                     title="Profile"
                     key="0" id="dropdown-basic-0" noCaret pullRight>
@@ -86,7 +90,12 @@ class App extends Component {
                         Profile & Items
                       </RouteNavItem>
                     </MenuItem>
-                    <MenuItem eventKey="2" onClick={this.handleLogout}>
+                    <MenuItem eventKey="2">
+                      <RouteNavItem key={5} href="/sell_item" id="bt-sell">
+                        Sell Item
+                      </RouteNavItem>
+                    </MenuItem>
+                    <MenuItem eventKey="3" onClick={this.handleLogout}>
                       Logout
                     </MenuItem>
                   </DropdownButton>

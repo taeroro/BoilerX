@@ -7,7 +7,9 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { term: '' };
+    this.state = {
+      term: '',
+    };
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
@@ -25,8 +27,11 @@ class SearchBar extends Component {
 
     if (this.state.term.length > 0) {
       try {
-        const results = await this.fetchItem(this.state.term);
+        const results = await this.fetchItem();
+
         this.props.callbackFromParent(results);
+        this.props.callbackFromParent1(this.state.term);
+
         this.props.history.push("/search");
       } catch (e) {
         alert(e);
@@ -36,12 +41,10 @@ class SearchBar extends Component {
   }
 
   /* invoke api */
-  fetchItem(term) {
+  fetchItem() {
     return invokeApig({
-      // TODO: change the request when backend is configured
       path: "/content",
       method: "GET",
-      // query: { keyword: term }
     });
   }
 

@@ -19,10 +19,9 @@ class EditProfile extends Component {
   async componentDidMount() {
     try {
       const results = await this.fetchUser();
-      console.log(results);
-
       this.setState({
-        user: results
+        user: results,
+        username: results.username
       });
     } catch (e) {
       alert(e);
@@ -51,17 +50,6 @@ class EditProfile extends Component {
 
     this.setState({ isLoading: true });
 
-/*
-    try {
-      const newUser = await this.updateProfile();
-      // this.setState({
-      //   newUser: newUser
-      // });
-    } catch (e) {
-      alert(e);
-    }
-*/
-
     // upload picture to S3
     if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
       alert("Please pick a file smaller than 5MB");
@@ -76,7 +64,6 @@ class EditProfile extends Component {
         : null;
 
       await this.updateProfile(uploadedFilename);
-      //this.props.history.push("/");
     } catch (e) {
       alert(e);
       this.setState({ isLoading: false });
@@ -84,9 +71,19 @@ class EditProfile extends Component {
     // end of uploading picture to S3
 
     this.setState({ isLoading: false });
+
+    window.location.reload();
   }
 
   updateProfile(imageURL) {
+    if (!imageURL) {
+      return invokeApig({
+        path: "/user/profile",
+        method: "PUT",
+        body: { username: this.state.username, imageURL: this.state.user.imageURL }
+      });
+    }
+
     return invokeApig({
       path: "/user/profile",
       method: "PUT",
@@ -108,7 +105,6 @@ class EditProfile extends Component {
           <span className="editLabel">Username</span>
           <FormControl
             className="editField"
-            placeholder={this.state.user ? this.state.user.username : "Loading..."}
             type="text"
             value={this.state.username}
             onChange={this.handleChange}
@@ -130,11 +126,11 @@ class EditProfile extends Component {
           <p className="descrLabel">You can’t modify the date you joined.</p>
         </div>
         <FormGroup controlId="file">
-          <ControlLabel>Attachment</ControlLabel>
+          <ControlLabel>Profile Picture</ControlLabel>
           <FormControl onChange={this.handleFileChange} type="file" />
         </FormGroup>
         <FormGroup>
-          <img height="200px" width="200px" src={this.state.user ? this.state.user.imageURL : "" } />
+          <img className="profile-edit-img" src={this.state.user ? this.state.user.imageURL : "" } />
         </FormGroup>
         <LoaderButton
           className="saveButton signupBtn"
@@ -143,7 +139,6 @@ class EditProfile extends Component {
           type="submit"
           isLoading={this.state.isLoading}
           text="Save"
-          loadingText="Uploading..."
           id="submitButtonSave"
         />
       </form>

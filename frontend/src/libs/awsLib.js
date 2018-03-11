@@ -7,7 +7,7 @@ export async function invokeApig({
   path,
   method = "GET",
   headers = {},
-  query = {},
+  queryParams = {},
   body
 }) {
   if (!await authUser()) {
@@ -26,17 +26,12 @@ export async function invokeApig({
       method,
       path,
       headers,
-      query,
+      queryParams,
       body
     });
 
   body = body ? JSON.stringify(body) : body;
   headers = signedRequest.headers;
-
-  console.log(signedRequest);
-  console.log(method);
-  console.log(headers);
-  console.log(body);
 
   const results = await fetch(signedRequest.url, {
     method,
@@ -120,7 +115,7 @@ function getUserToken(currentUser) {
   });
 }
 
-export function getCurrentUser() {
+function getCurrentUser() {
   const userPool = new CognitoUserPool({
     UserPoolId: config.cognito.USER_POOL_ID,
     ClientId: config.cognito.APP_CLIENT_ID

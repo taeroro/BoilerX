@@ -644,6 +644,25 @@
   background: linear-gradient(to right,  rgb(58, 202, 253), rgb(26, 161, 236)) !important;
 }
 .edit-item-btn:focus { outline:none !important; }
+.profile-edit-img {
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+}
+
+.edit-item-page-container {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin: 0;
+}
+.post-new-item-label {
+  color: #565656;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 25px;
+  font-weight: 400 !important;
+  letter-spacing: 2px !important;
+  margin-bottom: 50px;
+}
 /* ============================================ */
 /* Remove all button defualt styles */
 input, button, submit { border: none; }
