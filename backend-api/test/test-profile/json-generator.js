@@ -4,9 +4,9 @@ let randGen = require("../random-generators.js");
 
 function gen() {
     let args = process.argv.slice(2);
-    if (args[0] == 's') {
-        if (args.length > 1) {
-            gen_success(args[1]);
+    if (args[1] == 's') {
+        if (args.length > 2) {
+            gen_success(args[1], arg[2]);
         }
         else gen_success('false');
     }
@@ -16,7 +16,7 @@ function gen() {
     return;
 }
 
-function gen_success(empty) {
+function gen_success(method, empty) {
     let body = {};
     let filename = '/home/ling/BoilerX/backend-api/mocks/update-user/success';
     if (empty === empty) {
@@ -30,7 +30,12 @@ function gen_success(empty) {
         filename += '.json';
     }
 
+    let pathParameters = {
+        userId: "USER-SUB-1234"
+    };
+
     let output = {
+        pathParameters: JSON.stringify(pathParameters),
         body: JSON.stringify(body),
         requestContext: {
             identity: {
@@ -47,7 +52,7 @@ function gen_success(empty) {
     return;
 }
 
-function gen_fail (location) {
+function gen_fail (method, location) {
     let body = {};
     if (location !== 'body') {
         body = {

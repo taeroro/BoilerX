@@ -45,6 +45,7 @@ export async function main(event, context, callback) {
     ExpressionAttributeNames: {
       "#name": "name",
       "#searchName": ":searchName",
+      "#popularity": ":popularity",
       "#category": "category",
       "#subject": "subject",
       "#price": "price",
@@ -56,6 +57,7 @@ export async function main(event, context, callback) {
     ExpressionAttributeValues: {
       ":itemIDVal": event.pathParameters.itemID,
       ":name": data.name ? data.name : null,
+      ":popularity": data.popularity ? data.popularity : null,
       ":searchName": data.name ? String(data.name).toLowerCase() : null,
       ":category": data.category ? String(data.category).toLowerCase() : null,
       ":subject": data.subject ? String(data.subject).toLowerCase() : null,
