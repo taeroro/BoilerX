@@ -24,7 +24,7 @@ class SearchResultDetail extends Component {
     try {
       const results = await this.fetchItem();
 
-      console.log(results);
+      // console.log(results);
 
       this.setState({
         item: results
