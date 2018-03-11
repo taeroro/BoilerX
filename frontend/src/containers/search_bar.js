@@ -7,7 +7,9 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { term: '' };
+    this.state = {
+      term: '',
+    };
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
@@ -26,8 +28,6 @@ class SearchBar extends Component {
     if (this.state.term.length > 0) {
       try {
         const results = await this.fetchItem();
-
-        console.log(results);
 
         this.props.callbackFromParent(results);
         this.props.callbackFromParent1(this.state.term);

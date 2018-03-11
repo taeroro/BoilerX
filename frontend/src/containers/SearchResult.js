@@ -13,32 +13,19 @@ export default class SearchResult extends Component {
       );
     }
 
-    var item_num = 0;
-    this.props.searchItems.map(function(item) {
-      if (item.name.toLowerCase().includes(this.props.searchTerm)) item_num++;
-    }, this);
-
-    if (item_num == 0) {
-      return (
-        <div>
-          No item match the search term.
-        </div>
-      )
-    }
-
     return (
         <div className="container-fluid">
           <div className="row">
             <FadeIn>
-              {this.props.searchItems.map((item, i) =>
+              {this.props.searchItems.map((item) =>
                 item.name.toLowerCase().includes(this.props.searchTerm)
                 ?
-                <SearchPageItemContainer
-                  itemInfo={item}
-                  key={i}
-                />
+                  <SearchPageItemContainer
+                    itemInfo={item}
+                    key={item.itemID}
+                  />
                 :
-                <div></div>
+                  <div></div>
               )}
             </FadeIn>
           </div>
