@@ -18,7 +18,7 @@ export default class SellItem extends Component {
       price: 0.00,
       descr: "",
     };
-    this.file = null
+    this.file = null;
   }
 
   handleChange = event => {
