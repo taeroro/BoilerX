@@ -19,7 +19,7 @@ import { success, failure } from "../libs/response-lib";
  */
 export async function main(event, context, callback) {
   // Request body is passed in as a JSON encoded string in 'event.body'
-  const data = JSON.parse(event.query);
+  const data = JSON.parse(event.queryParams);
 
   if (!data.keyword) {
     callback(null, failure({ 
@@ -89,7 +89,8 @@ export async function main(event, context, callback) {
     result.Items.sort(function(a, b) {
       return parseInt(a.price) - parseInt(b.price);
     });
-    callback(null, success(result.Items));
+    //callback(null, success(result.Items));
+    callback(null, success('good'));
   } catch (e) {
     console.log(e);
     callback(null, failure({ status: false }));

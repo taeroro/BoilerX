@@ -24,15 +24,6 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  get_current_user:
-    handler: app/user/get_current_user.main
-    events:
-      - http: 
-          path: user/current
-          method: get
-          cors: true
-          authorizer: aws_iam
-
   get_items_popularity:
     handler: app/content/get_items_popularity.main
     events:
@@ -41,17 +32,12 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
-      - http:
-          path: content/item_pop
-          method: OPTIONS
-          cors: true
-          authorizer: aws_iam
 
   get_items_price:
     handler: app/content/get_items_price.main
     events:
       - http:
-          path: content/item_price
+          path: content/items_price
           method: get
           cors: true
           authorizer: aws_iam      
@@ -87,7 +73,7 @@ functions:
     handler: app/content/update_item.main
     events:
       - http: 
-          path: content/{itemID}/update
+          path: content/{itemID}
           method: put
           cors: true
           authorizer: aws_iam
@@ -96,7 +82,7 @@ functions:
     handler: app/content/delete_item.main
     events:
       - http: 
-          path: content/{itemID}/delete
+          path: content/{itemID}
           method: delete
           cors: true
           authorizer: aws_iam
@@ -123,7 +109,7 @@ functions:
     handler: app/user/update_pass.main
     events:
       - http: 
-          path: user/change_pass
+          path: user/pass
           method: put
           cors: true
           authorizer: aws_iam
@@ -134,6 +120,15 @@ functions:
       - http:
           path: user/items
           method: get
+          cors: true
+          authorizer: aws_iam
+  
+  get_user_by_id:
+    handler: app/user/get_user_by_id.main
+    events:
+      - http: 
+          path: user/{userid}
+          method: post
           cors: true
           authorizer: aws_iam
 # you can add statements to the Lambda function's IAM Role here

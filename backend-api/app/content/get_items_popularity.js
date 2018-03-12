@@ -17,7 +17,7 @@ import { success, failure } from "../libs/response-lib";
 export async function main(event, context, callback) { 
   // Request body is passed in as a JSON encoded string in 'event.body' 
    
-  const data = JSON.parse(event.query); 
+  const data = JSON.parse(event.queryParams); 
  
   if (!data.keyword) { 
     callback(null, failure({  
@@ -82,7 +82,7 @@ export async function main(event, context, callback) {
     ExpressionAttributeNames: attr_name, 
     ExpressionAttributeValues: attr_value 
   } 
-  /**  
+ 
   try { 
     const result = await dynamoDbLib.call("scan", params); 
     console.log("success"); 
@@ -94,7 +94,7 @@ export async function main(event, context, callback) {
     console.log(e); 
     callback(null, failure({ status: false })); 
   } 
-  */ 
+  /*
    
   try { 
     const result = await dynamoDbLib.call("scan", params); 
@@ -114,5 +114,5 @@ export async function main(event, context, callback) {
     } else { 
       callback(null, failure({ status: false })); 
     } 
-  } 
+  } */
 }
