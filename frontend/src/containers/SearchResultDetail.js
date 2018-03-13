@@ -23,12 +23,14 @@ class SearchResultDetail extends Component {
   async componentDidMount() {
     try {
       const results = await this.fetchItem();
+      this.setState({ item: results });
 
-      // console.log(results);
+      // const results1 = await this.fetchSeller();
+      // this.setState({ seller: results1 });
+      // console.log(results1);
 
-      this.setState({
-        item: results
-      });
+      await this.updateViews();
+
     } catch (e) {
       alert(e);
     }
@@ -38,6 +40,20 @@ class SearchResultDetail extends Component {
     return invokeApig({
       path: "/content/" + this.state.itemID,
       method: "GET"
+    });
+  }
+
+  fetchSeller() {
+    return invokeApig({
+      path: "/user/" + this.state.item.sellerID,
+      method: "POST"
+    });
+  }
+
+  updateViews() {
+    return invokeApig({
+      path: "/content/" + this.state.itemID + "/pop",
+      method: "PUT"
     });
   }
 
@@ -55,6 +71,7 @@ class SearchResultDetail extends Component {
          /* more items */
        ],
        ToAddresses: [
+         // TODO: email address
          'meng46@purdue.edu',
          /* more items */
        ]
@@ -113,11 +130,15 @@ class SearchResultDetail extends Component {
   }
 
   renderImageGallery() {
-    const imgLink = "../../src/img/hilver-table__0307336_PE427543_S4.JPG";
+    const imgLink = "../../src/img/default_image.png";
 
     return (
       <div className="galleryContainer col-lg-5">
-        <img className="gallery-img" src={imgLink} />
+        <img className="gallery-img"
+          src={
+            this.state.item ? this.state.item.imageURL : imgLink
+          }
+        />
       </div>
     );
   }

@@ -17,8 +17,28 @@ export default class SellItem extends Component {
       name: "",
       price: 0.00,
       descr: "",
+      username: ""
     };
     this.file = null;
+  }
+
+  async componentDidMount() {
+    try {
+      const results = await this.fetchUser();
+      this.setState({
+        user: results,
+        username: results.username
+      });
+    } catch (e) {
+      alert(e);
+    }
+  }
+
+  fetchUser() {
+    return invokeApig({
+      path: "/user/profile",
+      method: "GET"
+    });
   }
 
   handleChange = event => {
@@ -45,14 +65,6 @@ export default class SellItem extends Component {
     event.preventDefault();
 
     this.setState({ isLoading: true });
-/*
-    try {
-      await this.createItem();
-    } catch (e) {
-      alert(e);
-      this.setState({ isLoading: false });
-    }
-*/
 
     // upload picture to S3
     if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
@@ -74,7 +86,6 @@ export default class SellItem extends Component {
     }
     // end of uploading picture to S3
 
-
     this.setState({ isLoading: false });
 
   }
@@ -87,7 +98,8 @@ export default class SellItem extends Component {
         name: this.state.name,
         price: this.state.price,
         descr: this.state.descr,
-        imgURL: imgURL
+        sellerName: this.state.username,
+        imageURL: imgURL
       }
     });
   }

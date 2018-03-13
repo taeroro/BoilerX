@@ -27,12 +27,20 @@ class ListedItems extends Component {
 
   fetchListedItems() {
     return invokeApig({
-      path: "/content",
+      path: "/user/items",
       method: "GET"
     });
   }
 
   render() {
+    if (this.state.listedItems && this.state.listedItems.length == 0) {
+      return (
+        <div>
+          No item.
+        </div>
+      );
+    }
+
     return (
       <div className="sell-page-container col-sm-9">
         <div className="container-fluid cancelContainerFluidMargin">
