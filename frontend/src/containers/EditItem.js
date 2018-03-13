@@ -3,8 +3,9 @@ import { Link, withRouter } from "react-router-dom";
 import { HelpBlock, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import FadeIn from 'react-fade-in';
 import AWS from "aws-sdk";
+import config from "../config";
 
-import { invokeApig } from "../libs/awsLib";
+import { invokeApig, s3Upload } from "../libs/awsLib";
 import { S3_PREFIX_URL } from '../App';
 import LoaderButton from "../components/LoaderButton";
 
@@ -17,7 +18,9 @@ class EditItem extends Component {
       name: "",
       price: 0,
       descr: "",
+      imgURL: ""
     };
+    this.file = null;
   }
 
   async componentDidMount() {
@@ -26,7 +29,8 @@ class EditItem extends Component {
       this.setState({
         name: results.name,
         price: results.price,
-        descr: results.descr
+        descr: results.descr,
+        imgURL: results.imgURL
       });
     } catch (e) {
       alert(e);
@@ -46,6 +50,10 @@ class EditItem extends Component {
     });
   }
 
+  handleFileChange = event => {
+    this.file = event.target.files[0];
+  }
+
   validateForm() {
     if (this.state.name && this.state.descr) {
       return (
@@ -61,12 +69,33 @@ class EditItem extends Component {
 
     this.setState({ isLoading: true });
 
+/*
     try {
       await this.updateItem();
     } catch (e) {
       alert(e);
       this.setState({ isLoading: false });
     }
+*/
+    // upload picture to S3
+    if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
+      alert("Please pick a file smaller than 5MB");
+      return;
+    }
+
+    this.setState({ isLoading: true });
+
+    try {
+      const uploadedFilename = this.file
+        ? (await s3Upload(this.file, "item_img")).Location
+        : null;
+
+      await this.updateItem(uploadedFilename);
+    } catch (e) {
+      alert(e);
+      this.setState({ isLoading: false });
+    }
+    // end of uploading picture to S3
 
     this.setState({ isLoading: false });
 
@@ -76,7 +105,7 @@ class EditItem extends Component {
     return invokeApig({
       path: "/content/" + this.state.itemID,
       method: "PUT",
-      body: { name: this.state.name, price: this.state.price, descr: this.state.descr }
+      body: { name: this.state.name, price: this.state.price, descr: this.state.descr, imgURL: imageURL }
     });
   }
 
@@ -132,6 +161,13 @@ class EditItem extends Component {
             value={this.state.descr}
             onChange={this.handleChange}
           />
+        </FormGroup>
+        <FormGroup controlId="file">
+          <ControlLabel>Item Picture</ControlLabel>
+          <FormControl onChange={this.handleFileChange} type="file" />
+        </FormGroup>
+        <FormGroup>
+          <img className="profile-edit-img" src={this.state.imageURL} />
         </FormGroup>
         <LoaderButton
           className="saveButton signupBtn"

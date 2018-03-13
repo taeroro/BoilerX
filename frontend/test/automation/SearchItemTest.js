@@ -1,4 +1,5 @@
 const expect = require('chai').expect;
+const correctPassword = 'test123456';
 
 describe('Search Item', function() {
 
@@ -7,9 +8,9 @@ describe('Search Item', function() {
     browser.alertAccept();
     browser.click('#bt-login');
     browser.setValue('#email', 'meng46@purdue.edu');
-    browser.setValue('#password', 'monikamonika123');
+    browser.setValue('#password', correctPassword);
     browser.click('#submitButtonInLogin');
-    browser.pause(1000);
+    browser.pause(5000);
   });
 
   it('Search Item', function() {
