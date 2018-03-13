@@ -18,14 +18,15 @@ export default class SearchResult extends Component {
           <div className="row">
             <FadeIn>
               {this.props.searchItems.map((item) =>
-                item.name.toLowerCase().includes(this.props.searchTerm)
-                ?
-                  <SearchPageItemContainer
-                    itemInfo={item}
-                    key={item.itemID}
-                  />
-                :
-                  <div></div>
+                item.name &&
+                  item.name.toLowerCase().includes(this.props.searchTerm)
+                  ?
+                    <SearchPageItemContainer
+                      itemInfo={item}
+                      key={item.itemID}
+                    />
+                  :
+                    <div></div>
               )}
             </FadeIn>
           </div>

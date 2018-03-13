@@ -111,6 +111,8 @@
   background-color: #fff;
 }
 #bt-signup:focus { outline:none; }
+#bt-profile { background: none; }
+#bt-sell { background: none; }
 /* ============================================ */
 /* 1. Popular Items */
 .popContainer {
@@ -361,6 +363,9 @@
   max-width: 100%;
   border-radius: 5px;
   box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.3);
+  width: 500px;
+  height: 500px;
+  object-fit: contain;
 }
 .title-n-detail {
   margin-top: 35px;

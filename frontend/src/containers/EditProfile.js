@@ -16,6 +16,7 @@ class EditProfile extends Component {
 
     this.file = null;
   }
+  
   async componentDidMount() {
     try {
       const results = await this.fetchUser();
