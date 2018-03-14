@@ -3,8 +3,7 @@ import { Link, withRouter } from "react-router-dom";
 
 class SellItemContainer extends Component {
   renderImage() {
-    // TODO: change this line when the item has url in DB
-    const itemImgURL = "src/img/hilver-table__0307336_PE427543_S4.JPG";
+    const itemImgURL = this.props.itemInfo.imageURL;
     return (
       <img src={itemImgURL} alt="" className="sellItemImg"/>
     );

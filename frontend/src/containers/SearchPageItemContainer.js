@@ -3,8 +3,7 @@ import { Link, withRouter } from "react-router-dom";
 
 class SearchPageItemContainer extends Component {
   renderImage() {
-    // TODO: change this line when the item has url in DB
-    const itemImgURL = "src/img/hilver-table__0307336_PE427543_S4.JPG";
+    const itemImgURL = this.props.itemInfo.imageURL;
     return (
       <img src={itemImgURL} width="280" height="280" alt=""
         className="SPItemImg"/>
@@ -26,8 +25,7 @@ class SearchPageItemContainer extends Component {
   }
 
   renderDescr() {
-    // const descr = this.props.itemInfo.descr;
-    const descr = "This desk is made of bamboo which is a durable, renewable and sustainable material.";
+    const descr = this.props.itemInfo.descr;
     return (<p className="SPItemDescr">{descr}</p>);
   }
 
@@ -44,7 +42,7 @@ class SearchPageItemContainer extends Component {
           <div className="SPItemContainer">
             {this.renderImage()}
             {this.renderItemName()}
-            {this.renderTags()}
+            {/* {this.renderTags()} */}
             {this.renderDescr()}
             {this.renderPrice()}
           </div>

@@ -118,12 +118,12 @@ class EditItem extends Component {
 
     try {
       await this.deleteItem();
+      this.setState({ isLoading: false });
+      this.props.history.push("/profile");
     } catch (e) {
       alert(e);
       this.setState({ isLoading: false });
     }
-
-    this.setState({ isLoading: false });
 
   }
 
@@ -142,6 +142,7 @@ class EditItem extends Component {
           <FormControl
             className="editField"
             type="text"
+            maxLength="30"
             value={this.state.name}
             onChange={this.handleChange}
           />
@@ -150,7 +151,8 @@ class EditItem extends Component {
           <span className="editLabel">Price</span>
           <FormControl
             className="editField"
-            type="text"
+            type="number"
+            step="0.01"
             value={this.state.price}
             onChange={this.handleChange}
           />
@@ -160,6 +162,7 @@ class EditItem extends Component {
           <FormControl
             className="editField"
             type="text"
+            maxLength="100"
             value={this.state.descr}
             onChange={this.handleChange}
           />

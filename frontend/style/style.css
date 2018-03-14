@@ -150,6 +150,7 @@
 .itemImg {
   width: 180px;
   height: 180px;
+  object-fit: contain;
 }
 .itemName {
   margin-top: 5px;
@@ -626,6 +627,7 @@
 .sellItemImg {
   width: 230px;
   height: 230px;
+  object-fit: contain;
 }
 .sellItemContainer {
   margin-top: 80px;
@@ -652,7 +654,7 @@
 .profile-edit-img {
   height: 200px;
   width: 200px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .edit-item-page-container {
