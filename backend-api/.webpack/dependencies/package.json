@@ -1,0 +1,9 @@
+{
+  "name": "boilerx-back",
+  "version": "1.0.0",
+  "description": "Packaged externals for boilerx-back",
+  "private": true,
+  "dependencies": {
+    "babel-runtime": "6.26.0"
+  }
+}

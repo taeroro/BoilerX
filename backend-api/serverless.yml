@@ -105,11 +105,11 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  update_password:
-    handler: app/user/update_pass.main
+  update_popularity:
+    handler: app/content/inc_pop.main
     events:
       - http: 
-          path: user/pass
+          path: content/{itemID}/pop
           method: put
           cors: true
           authorizer: aws_iam
@@ -127,10 +127,11 @@ functions:
     handler: app/user/get_user_by_id.main
     events:
       - http: 
-          path: user/{userid}
-          method: post
+          path: user/{userId}
+          method: get
           cors: true
           authorizer: aws_iam
+
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
 #    - Effect: "Allow"
