@@ -13,6 +13,7 @@ export default class Signup extends Component {
     this.state = {
       isLoading: false,
       email: "",
+      username: "",
       password: "",
       confirmPassword: "",
       confirmationCode: "",
@@ -23,6 +24,7 @@ export default class Signup extends Component {
   validateForm() {
     return (
       this.state.email.length > 0 &&
+      this.state.username.length > 0 &&
       this.state.password.length > 0 &&
       this.state.password === this.state.confirmPassword
     );
@@ -86,7 +88,7 @@ export default class Signup extends Component {
     return invokeApig({
       path: "/user/create",
       method: "POST",
-      body: { email: this.state.email }
+      body: { email: this.state.email, username: this.state.username }
     });
   }
 
@@ -172,6 +174,15 @@ export default class Signup extends Component {
             type="email"
             placeholder="Purdue Email Address"
             value={this.state.email}
+            onChange={this.handleChange}
+          />
+        </FormGroup>
+        <FormGroup controlId="username">
+          <FormControl
+            className="allField"
+            type="text"
+            placeholder="Username"
+            value={this.state.username}
             onChange={this.handleChange}
           />
         </FormGroup>

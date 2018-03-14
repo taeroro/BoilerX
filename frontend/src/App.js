@@ -52,7 +52,6 @@ class App extends Component {
   }
 
   termCallBack = searchTerm => {
-    console.log(searchTerm);
     this.setState({ searchTerm: searchTerm });
   }
 

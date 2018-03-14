@@ -17,8 +17,29 @@ export default class SellItem extends Component {
       name: "",
       price: 0.00,
       descr: "",
+      user: null
     };
     this.file = null;
+  }
+
+  async componentDidMount() {
+    try {
+      const results = await this.fetchUser();
+
+      this.setState({
+        user: results,
+        // username: results.username
+      });
+    } catch (e) {
+      alert(e);
+    }
+  }
+
+  fetchUser() {
+    return invokeApig({
+      path: "/user/profile",
+      method: "GET"
+    });
   }
 
   handleChange = event => {
@@ -45,14 +66,6 @@ export default class SellItem extends Component {
     event.preventDefault();
 
     this.setState({ isLoading: true });
-/*
-    try {
-      await this.createItem();
-    } catch (e) {
-      alert(e);
-      this.setState({ isLoading: false });
-    }
-*/
 
     // upload picture to S3
     if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
@@ -68,14 +81,16 @@ export default class SellItem extends Component {
         : null;
 
       await this.createItem(uploadedFilename);
+
+      this.setState({ isLoading: false });
+      alert("Item post complete.");
+      window.location.reload();
+
     } catch (e) {
       alert(e);
       this.setState({ isLoading: false });
     }
     // end of uploading picture to S3
-
-
-    this.setState({ isLoading: false });
 
   }
 
@@ -87,7 +102,10 @@ export default class SellItem extends Component {
         name: this.state.name,
         price: this.state.price,
         descr: this.state.descr,
-        imgURL: imgURL
+        sellerName: this.state.user.username,
+        sellerEmail: this.state.user.email,
+        sellerImg: this.state.user.imageURL,
+        imageURL: imgURL
       }
     });
   }
@@ -106,6 +124,7 @@ export default class SellItem extends Component {
           <FormControl
             className="editField"
             type="text"
+            maxLength="30"
             value={this.state.name}
             onChange={this.handleChange}
           />
@@ -114,7 +133,8 @@ export default class SellItem extends Component {
           <span className="editLabel">Price</span>
           <FormControl
             className="editField"
-            type="text"
+            type="number"
+            step="0.01"
             value={this.state.price}
             onChange={this.handleChange}
           />
@@ -124,6 +144,7 @@ export default class SellItem extends Component {
           <FormControl
             className="editField"
             type="text"
+            maxLength="100"
             value={this.state.descr}
             onChange={this.handleChange}
           />
@@ -138,7 +159,7 @@ export default class SellItem extends Component {
           disabled={!this.validateForm()}
           type="submit"
           isLoading={this.state.isLoading}
-          text="Save"
+          text="Post"
           id="submitButtonSave"
         />
       </form>

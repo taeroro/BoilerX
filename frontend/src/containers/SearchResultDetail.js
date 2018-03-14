@@ -15,20 +15,23 @@ class SearchResultDetail extends Component {
     this.state = {
       itemID: props.match.params.id,
       item: null,
-      seller: null,
+      buyerEmail: null,
       isLoading: false
     };
+
+    this.sendEmail = this.sendEmail.bind(this);
   }
 
   async componentDidMount() {
     try {
       const results = await this.fetchItem();
+      this.setState({ item: results });
 
-      // console.log(results);
+      const results1 = await this.fetchBuyer();
+      this.setState({ buyerEmail: results1.email });
 
-      this.setState({
-        item: results
-      });
+      await this.updateViews();
+
     } catch (e) {
       alert(e);
     }
@@ -41,11 +44,27 @@ class SearchResultDetail extends Component {
     });
   }
 
+  fetchBuyer() {
+    return invokeApig({
+      path: "/user/profile",
+      method: "GET"
+    });
+  }
+
+  updateViews() {
+    return invokeApig({
+      path: "/content/" + this.state.itemID + "/pop",
+      method: "PUT"
+    });
+  }
+
   sendEmail() {
     // Load the AWS SDK for Node.js
     var AWS = require('aws-sdk');
     // Set the region
     AWS.config.update({region: 'us-east-1'});
+
+    var sellerEmailAddr = this.state.item.sellerEmail;
 
     // Create sendEmail params
     var params = {
@@ -55,7 +74,7 @@ class SearchResultDetail extends Component {
          /* more items */
        ],
        ToAddresses: [
-         'meng46@purdue.edu',
+         sellerEmailAddr
          /* more items */
        ]
      },
@@ -63,16 +82,16 @@ class SearchResultDetail extends Component {
        Body: { /* required */
          Html: {
           Charset: "UTF-8",
-          Data: "TESTING"
+          Data: "Someone is interested in your " + this.state.item.name + " on BoilerX. Please contact: " + this.state.buyerEmail
          },
          Text: {
           Charset: "UTF-8",
-          Data: "TESTING TEXT BODY"
+          Data: "Someone is interested in your " + this.state.item.name + " on BoilerX. Please contact: " + this.state.buyerEmail
          }
         },
         Subject: {
          Charset: 'UTF-8',
-         Data: 'Test email'
+         Data: 'Someone is interested in your posted item on BoilerX!'
         }
        },
      Source: 'schewshu@purdue.edu', /* required */
@@ -113,11 +132,15 @@ class SearchResultDetail extends Component {
   }
 
   renderImageGallery() {
-    const imgLink = "../../src/img/hilver-table__0307336_PE427543_S4.JPG";
+    const imgLink = "../../src/img/default_image.png";
 
     return (
       <div className="galleryContainer col-lg-5">
-        <img className="gallery-img" src={imgLink} />
+        <img className="gallery-img"
+          src={
+            this.state.item ? this.state.item.imageURL : imgLink
+          }
+        />
       </div>
     );
   }
@@ -130,8 +153,6 @@ class SearchResultDetail extends Component {
             <h1 className="item-detail-title">{this.state.item.name}</h1>
             <div className="sub-title-container">
               <span className="detail-views">{this.state.item.popularity + " views"}</span>
-              {/* TODO: display popluar item */}
-
             </div>
             <div className="price-n-buy-btn-container">
               <span className="detail-price">{"$ " + parseFloat(Math.round(this.state.item.price * 100) / 100).toFixed(2)}</span>
@@ -152,10 +173,7 @@ class SearchResultDetail extends Component {
   }
 
   renderSeller() {
-    // TODO: update seller's userid & time
-    const sellerImgLink = "https://images.unsplash.com/photo-1508034567015-5fa801984b94?ixlib=rb-0.3.5&s=d56d4832399fe7436535a92d90f06a51&auto=format&fit=crop&w=2000&q=80";
     const verifiedImgLink = `${S3_PREFIX_URL}public_img/Verified.png`;
-    const sellerID = "userid";
     const sellerListDate = "Dec 12, 2017";
 
     return (
@@ -163,13 +181,17 @@ class SearchResultDetail extends Component {
         <div className="seller-card-view">
           <div className="seller-card-container">
             <div className="seller-card-img-container">
-              <img src={sellerImgLink} className="seller-card-img"/>
+              <img src=
+                {this.state.item ? this.state.item.sellerImg : <div></div> }
+                className="seller-card-img"/>
               <img src={verifiedImgLink} className="seller-card-verifed-img" />
             </div>
             <p className="seller-card-verifed-label">Verified User</p>
             <div className="seller-card-id-container">
               <p className="seller-card-id-n-date-label">Listed by:</p>
-              <p className="seller-card-id">{sellerID}</p>
+              <p className="seller-card-id">
+                {this.state.item ? this.state.item.sellerName : "Loading..." }
+              </p>
             </div>
             <div className="seller-card-id-container">
               <p className="seller-card-id-n-date-label">Listed on:</p>

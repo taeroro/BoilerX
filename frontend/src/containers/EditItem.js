@@ -18,7 +18,7 @@ class EditItem extends Component {
       name: "",
       price: 0,
       descr: "",
-      imgURL: ""
+      imageURL: ""
     };
     this.file = null;
   }
@@ -30,7 +30,7 @@ class EditItem extends Component {
         name: results.name,
         price: results.price,
         descr: results.descr,
-        imgURL: results.imgURL
+        imageURL: results.imageURL
       });
     } catch (e) {
       alert(e);
@@ -69,14 +69,6 @@ class EditItem extends Component {
 
     this.setState({ isLoading: true });
 
-/*
-    try {
-      await this.updateItem();
-    } catch (e) {
-      alert(e);
-      this.setState({ isLoading: false });
-    }
-*/
     // upload picture to S3
     if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
       alert("Please pick a file smaller than 5MB");
@@ -99,13 +91,23 @@ class EditItem extends Component {
 
     this.setState({ isLoading: false });
 
+    window.location.reload();
+
   }
 
   updateItem(imageURL) {
+    if (!imageURL) {
+      return invokeApig({
+        path: "/content/" + this.state.itemID,
+        method: "PUT",
+        body: { name: this.state.name, price: this.state.price, descr: this.state.descr, imageURL: this.state.imageURL }
+      });
+    }
+
     return invokeApig({
       path: "/content/" + this.state.itemID,
       method: "PUT",
-      body: { name: this.state.name, price: this.state.price, descr: this.state.descr, imgURL: imageURL }
+      body: { name: this.state.name, price: this.state.price, descr: this.state.descr, imageURL: imageURL }
     });
   }
 
@@ -116,12 +118,12 @@ class EditItem extends Component {
 
     try {
       await this.deleteItem();
+      this.setState({ isLoading: false });
+      this.props.history.push("/profile");
     } catch (e) {
       alert(e);
       this.setState({ isLoading: false });
     }
-
-    this.setState({ isLoading: false });
 
   }
 
@@ -140,6 +142,7 @@ class EditItem extends Component {
           <FormControl
             className="editField"
             type="text"
+            maxLength="30"
             value={this.state.name}
             onChange={this.handleChange}
           />
@@ -148,7 +151,8 @@ class EditItem extends Component {
           <span className="editLabel">Price</span>
           <FormControl
             className="editField"
-            type="text"
+            type="number"
+            step="0.01"
             value={this.state.price}
             onChange={this.handleChange}
           />
@@ -158,12 +162,13 @@ class EditItem extends Component {
           <FormControl
             className="editField"
             type="text"
+            maxLength="100"
             value={this.state.descr}
             onChange={this.handleChange}
           />
         </FormGroup>
         <FormGroup controlId="file">
-          <ControlLabel>Item Picture</ControlLabel>
+          <ControlLabel>Update Item Picture</ControlLabel>
           <FormControl onChange={this.handleFileChange} type="file" />
         </FormGroup>
         <FormGroup>
@@ -207,10 +212,6 @@ class EditItem extends Component {
           id="submitButtonDelete"
           onClick={this.handleDeleteItem}
         />
-        {/* <button
-          className="saveButton signupBtn"
-          id="bt-delete"
-          onClick={this.handleDeleteItem}>Delete</button> */}
       </div>
     );
   }
