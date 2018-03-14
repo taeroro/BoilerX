@@ -5,7 +5,7 @@ export async function main(event, context, callback) {
   const params = {
     TableName: "User",
     Key: {
-      userId: event.pathParameters.userId
+        userId: event.pathParameters.userId
     }
   };
 

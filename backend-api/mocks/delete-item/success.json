@@ -1,10 +1,10 @@
 {
     "pathParameters": {
-        "itemID": "aaa"
+        "itemID": "ccc"
     },
     "requestContext": {
       "identity": {
-        "cognitoIdentityId": "aa"
+        "cognitoIdentityId": "cc"
       }
     }
   }
