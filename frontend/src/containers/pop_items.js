@@ -34,6 +34,14 @@ class PopularItems extends Component {
   }
 
   render() {
+    if (this.state.popItems && this.state.popItems.length == 0) {
+      return (
+        <div>
+          No item.
+        </div>
+      )
+    }
+
     return (
       <div className="popContainer">
         <h1>Popular Items on BoilerX :</h1>
