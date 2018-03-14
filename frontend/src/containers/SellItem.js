@@ -25,7 +25,6 @@ export default class SellItem extends Component {
   async componentDidMount() {
     try {
       const results = await this.fetchUser();
-      console.log(results);
 
       this.setState({
         user: results,
