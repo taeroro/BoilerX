@@ -15,7 +15,7 @@ describe('Search Item', function() {
 
   it('Search Item', function() {
 
-    browser.setValue('#searchBar', 'table');
+    browser.setValue('#searchBar', 'iphone');
     browser.keys("Enter");
     browser.pause(5000);
     //let item = browser.getText('.SPItemContainer');

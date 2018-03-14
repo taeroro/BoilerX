@@ -28,7 +28,7 @@ class SellItemContainer extends Component {
   renderEditBtn() {
     return (
       <Link to={"/edit_item/" + this.props.itemInfo.itemID}>
-        <button className="edit-item-btn">Edit</button>
+        <button className="edit-item-btn" id="edit_item_btn">Edit</button>
       </Link>
     );
   }
