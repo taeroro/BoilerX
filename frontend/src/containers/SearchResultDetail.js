@@ -173,7 +173,6 @@ class SearchResultDetail extends Component {
   }
 
   renderSeller() {
-    // const sellerImgLink = "https://images.unsplash.com/photo-1508034567015-5fa801984b94?ixlib=rb-0.3.5&s=d56d4832399fe7436535a92d90f06a51&auto=format&fit=crop&w=2000&q=80";
     const verifiedImgLink = `${S3_PREFIX_URL}public_img/Verified.png`;
     const sellerListDate = "Dec 12, 2017";
 
