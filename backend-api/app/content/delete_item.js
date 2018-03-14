@@ -7,13 +7,6 @@ export async function main(event, context, callback) {
         TableName: "Item",
         Key: {
             itemID: event.pathParameters.itemID
-        },
-        ConditionExpression : "#sellerID = :sellerID",
-        ExpressionAttributeNames: {
-            "#sellerID": "sellerID"
-        },
-        ExpressionAttributeValues: {
-            ":sellerID": event.requestContext.identity.cognitoIdentityId
         }
     };
 
