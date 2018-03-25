@@ -1,7 +1,7 @@
 import AWS from "aws-sdk";
 import { CognitoUserPool } from "amazon-cognito-identity-js";
 import sigV4Client from "./sigV4Client";
-import config from "../config";
+import config from "../config.js";
 
 export async function invokeApig({
   path,
