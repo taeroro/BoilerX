@@ -84,7 +84,11 @@ export default class SellItem extends Component {
 
       this.setState({ isLoading: false });
       alert("Item post complete.");
-      window.location.reload();
+
+      // window.location.reload();
+
+      // BUG 18: redirect wrong page
+      this.props.history.push("/heyUgotMe");
 
     } catch (e) {
       alert(e);
@@ -95,19 +99,29 @@ export default class SellItem extends Component {
   }
 
   createItem(imgURL) {
-    return invokeApig({
-      path: "/content/create",
-      method: "POST",
-      body: {
-        name: this.state.name,
-        price: this.state.price,
-        descr: this.state.descr,
-        sellerName: this.state.user.username,
-        sellerEmail: this.state.user.email,
-        sellerImg: this.state.user.imageURL,
-        imageURL: imgURL
+    if (this.state.name.length < 30) {
+      var currName = this.state.name;
+      for (var i = this.state.name.length; i < 30; i++) {
+        currName += "-";
       }
-    });
+
+      this.setState({ name: currName });
+
+      return invokeApig({
+        path: "/content/create",
+        method: "POST",
+        body: {
+          name: currName,
+          price: this.state.price,
+          descr: this.state.descr,
+          sellerName: this.state.user.username,
+          sellerEmail: this.state.user.email,
+          sellerImg: this.state.user.imageURL,
+          imageURL: imgURL
+        }
+      });
+    }
+
   }
 
   renderTitle() {

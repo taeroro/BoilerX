@@ -27,8 +27,9 @@ class PopularItems extends Component {
 
   /* invoke api */
   fetchPopItems() {
+    // BUG 25
     return invokeApig({
-      path: "/content",
+      path: "/content/f",
       method: "GET"
     });
   }

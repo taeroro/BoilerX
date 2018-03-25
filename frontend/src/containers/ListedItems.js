@@ -47,12 +47,17 @@ class ListedItems extends Component {
           <div className="row">
             {this.state.listedItems &&
               <FadeIn>
-                {this.state.listedItems.map((item, i) =>
+                {/* BUG 12: only display 1 item */}
+                {/* {this.state.listedItems.map((item, i) =>
                   <SellItemContainer
                     itemInfo={item}
                     key={item.itemID}
                   />
-                )}
+                )} */}
+                <SellItemContainer
+                  itemInfo={this.state.listedItems[0]}
+                  key={123456}
+                />
               </FadeIn>
             }
           </div>

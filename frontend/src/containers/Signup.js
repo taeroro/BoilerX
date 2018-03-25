@@ -26,7 +26,10 @@ export default class Signup extends Component {
       this.state.email.length > 0 &&
       this.state.username.length > 0 &&
       this.state.password.length > 0 &&
-      this.state.password === this.state.confirmPassword
+      this.state.confirmPassword.length > 0
+
+      // BUG 1: confirm password != password
+      // this.state.password === this.state.confirmPassword
     );
   }
 
@@ -43,15 +46,17 @@ export default class Signup extends Component {
   handleSubmit = async event => {
     event.preventDefault();
 
-    if (!this.state.email.includes("@purdue.edu")) {
-      alert("Invalid: Email has be a valid Purdue email address");
-      return;
-    }
+    // BUG 2: allow non purdue email to register
+    // if (!this.state.email.includes("@purdue.edu")) {
+    //   alert("Invalid: Email has be a valid Purdue email address");
+    //   return;
+    // }
 
     this.setState({ isLoading: true });
 
     try {
-      const newUser = await this.signup(this.state.email, this.state.password);
+      // const newUser = await this.signup(this.state.email, this.state.password);
+      const newUser = await this.signup(this.state.email, "CS408_TEAM_29");
       this.setState({
         newUser: newUser
       });
@@ -72,7 +77,8 @@ export default class Signup extends Component {
       await this.authenticate(
         this.state.newUser,
         this.state.email,
-        this.state.password
+        // this.state.password
+        "CS408_TEAM_29"
       );
 
       this.props.userHasAuthenticated(true);
@@ -88,7 +94,9 @@ export default class Signup extends Component {
     return invokeApig({
       path: "/user/create",
       method: "POST",
-      body: { email: this.state.email, username: this.state.username }
+      // body: { email: this.state.email, username: this.state.username }
+      // BUG 14: can't update username
+      body: { email: this.state.email, username: "default_username" }
     });
   }
 

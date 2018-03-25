@@ -16,7 +16,7 @@ class EditProfile extends Component {
 
     this.file = null;
   }
-  
+
   async componentDidMount() {
     try {
       const results = await this.fetchUser();
@@ -73,7 +73,8 @@ class EditProfile extends Component {
 
     this.setState({ isLoading: false });
 
-    window.location.reload();
+    // 
+    // window.location.reload();
   }
 
   updateProfile(imageURL) {
@@ -115,17 +116,19 @@ class EditProfile extends Component {
         <FormGroup controlId="email">
           <span className="editLabel">Email</span>
           <div className="editField editFieldPLUS">
-            <span>{this.state.user ? this.state.user.email : "Loading..." }</span>
+            {/* BUG 5: email displaying the false email */}
+            {/* <span>{this.state.user ? "this.state.user.email" : "Loading..." }</span> */}
+            <span>Loading...</span>
           </div>
           <p className="descrLabel">Your email address won’t be shared to the public. It will only be shared when you confirm to sell your item to someone.</p>
         </FormGroup>
-        <div>
+        {/* <div>
           <span className="editLabel">Joined Date</span>
           <div className="editField editFieldPLUS">
             <span>Dec. 19, 2017</span>
           </div>
           <p className="descrLabel">You can’t modify the date you joined.</p>
-        </div>
+        </div> */}
         <FormGroup controlId="file">
           <ControlLabel>Profile Picture</ControlLabel>
           <FormControl onChange={this.handleFileChange} type="file" />

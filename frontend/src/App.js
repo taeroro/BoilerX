@@ -41,8 +41,9 @@ class App extends Component {
   }
 
   handleLogout = event => {
-    signOutUser();
-    this.userHasAuthenticated(false);
+    // BUG 9: disable log out
+    // signOutUser();
+    // this.userHasAuthenticated(false); 
     this.props.history.push("/login");
   }
 

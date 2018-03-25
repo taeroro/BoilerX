@@ -30,7 +30,11 @@ class SearchResultDetail extends Component {
       const results1 = await this.fetchBuyer();
       this.setState({ buyerEmail: results1.email });
 
-      await this.updateViews();
+      // BUG 3: disable update views
+      // await this.updateViews();
+
+      // BUG 19: automatically sent email
+      this.sendEmail();
 
     } catch (e) {
       alert(e);
@@ -82,11 +86,14 @@ class SearchResultDetail extends Component {
        Body: { /* required */
          Html: {
           Charset: "UTF-8",
-          Data: "Someone is interested in your " + this.state.item.name + " on BoilerX. Please contact: " + this.state.buyerEmail
+          // Data: "Someone is interested in your " + this.state.item.name + " on BoilerX. Please contact: " + this.state.buyerEmail
+          // BUG 4: send wrong email address
+          Data: "Someone is interested in your " + this.state.item.name + " on BoilerX. Please contact: " + sellerEmailAddr
          },
          Text: {
           Charset: "UTF-8",
-          Data: "Someone is interested in your " + this.state.item.name + " on BoilerX. Please contact: " + this.state.buyerEmail
+          // Data: "Someone is interested in your " + this.state.item.name + " on BoilerX. Please contact: " + this.state.buyerEmail
+          Data: "Someone is interested in your " + this.state.item.name + " on BoilerX. Please contact: " + sellerEmailAddr
          }
         },
         Subject: {
@@ -123,7 +130,8 @@ class SearchResultDetail extends Component {
 
     return (
       <div className="itemDetailTopBar">
-        <Link className="backButton" to="/search">
+        {/* BUG 15: back to profile */}
+        <Link className="backButton" to="/profile">
           <img className="backBT-img" src={backImgLink} />
         </Link>
         <span className="backnTag">Back</span>
@@ -155,7 +163,7 @@ class SearchResultDetail extends Component {
               <span className="detail-views">{this.state.item.popularity + " views"}</span>
             </div>
             <div className="price-n-buy-btn-container">
-              <span className="detail-price">{"$ " + parseFloat(Math.round(this.state.item.price * 100) / 100).toFixed(2)}</span>
+              <span className="detail-price">{"$ -" + parseFloat(Math.round(this.state.item.price * 100) / 100).toFixed(2)}</span>
               <LoaderButton
                 className="buy-button"
                 type="submit"
@@ -174,7 +182,7 @@ class SearchResultDetail extends Component {
 
   renderSeller() {
     const verifiedImgLink = `${S3_PREFIX_URL}public_img/Verified.png`;
-    const sellerListDate = "Dec 12, 2017";
+    // const sellerListDate = "Dec 12, 2017";
 
     return (
       <div className="item-detail-seller-container col-lg-3">
@@ -193,10 +201,10 @@ class SearchResultDetail extends Component {
                 {this.state.item ? this.state.item.sellerName : "Loading..." }
               </p>
             </div>
-            <div className="seller-card-id-container">
+            {/* <div className="seller-card-id-container">
               <p className="seller-card-id-n-date-label">Listed on:</p>
               <p className="seller-card-date">{sellerListDate}</p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

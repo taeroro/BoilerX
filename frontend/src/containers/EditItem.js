@@ -28,10 +28,15 @@ class EditItem extends Component {
       const results = await this.fetchItem();
       this.setState({
         name: results.name,
-        price: results.price,
+        // BUG 8: does not update price's state
+        // price: results.price,
         descr: results.descr,
         imageURL: results.imageURL
       });
+
+      // BUG 22:  update views 
+      await this.updateViews();
+
     } catch (e) {
       alert(e);
     }
@@ -41,6 +46,13 @@ class EditItem extends Component {
     return invokeApig({
       path: "/content/" + this.state.itemID,
       method: "GET"
+    });
+  }
+
+  updateViews() {
+    return invokeApig({
+      path: "/content/" + this.state.itemID + "/pop",
+      method: "PUT"
     });
   }
 
@@ -77,22 +89,22 @@ class EditItem extends Component {
 
     this.setState({ isLoading: true });
 
-    try {
-      const uploadedFilename = this.file
-        ? (await s3Upload(this.file, "item_img")).Location
-        : null;
-
-      await this.updateItem(uploadedFilename);
-    } catch (e) {
-      alert(e);
-      this.setState({ isLoading: false });
-    }
+    // BUG 13: disable upload to server
+    // try {
+    //   const uploadedFilename = this.file
+    //     ? (await s3Upload(this.file, "item_img")).Location
+    //     : null;
+    //
+    //   await this.updateItem(uploadedFilename);
+    // } catch (e) {
+    //   alert(e);
+    //   this.setState({ isLoading: false });
+    // }
     // end of uploading picture to S3
 
     this.setState({ isLoading: false });
 
     window.location.reload();
-
   }
 
   updateItem(imageURL) {
@@ -117,7 +129,8 @@ class EditItem extends Component {
     this.setState({ isLoading: true });
 
     try {
-      await this.deleteItem();
+      // BUG 17: cannot delete item
+      // await this.deleteItem();
       this.setState({ isLoading: false });
       this.props.history.push("/profile");
     } catch (e) {
@@ -151,6 +164,7 @@ class EditItem extends Component {
           <span className="editLabel">Price</span>
           <FormControl
             className="editField"
+            type="text"
             type="number"
             step="0.01"
             value={this.state.price}
@@ -162,10 +176,12 @@ class EditItem extends Component {
           <FormControl
             className="editField"
             type="text"
-            maxLength="100"
+            // BUG 16: maxLength change to 120
+            maxLength="120"
             value={this.state.descr}
             onChange={this.handleChange}
           />
+          <p>Max length for descrpition: 100</p>
         </FormGroup>
         <FormGroup controlId="file">
           <ControlLabel>Update Item Picture</ControlLabel>

@@ -18,8 +18,9 @@ export default class SearchResult extends Component {
           <div className="row">
             <FadeIn>
               {this.props.searchItems.map((item) =>
-                item.name &&
-                  item.name.toLowerCase().includes(this.props.searchTerm)
+                item.name
+                  // BUG 10: disable search by keyword function
+                  // && item.name.toLowerCase().includes(this.props.searchTerm)
                   ?
                     <SearchPageItemContainer
                       itemInfo={item}
