@@ -50,6 +50,15 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam 
+
+  faulty_get_items:
+    handler: app/content/faulty_get_items.main
+    events:
+      - http:
+          path: content/f
+          method: get
+          cors: true
+          authorizer: aws_iam 
   
   get_item_by_id:
     handler: app/content/get_item_by_id.main
@@ -131,6 +140,9 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
+
+  
+
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
