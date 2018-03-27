@@ -1,0 +1,5 @@
+{
+    "name":{"S": "USER-SUB-1234"},
+    "email": {"S": "test-email"},
+    "username":{"S": "test-username"}
+}

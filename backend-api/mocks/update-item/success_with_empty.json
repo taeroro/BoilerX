@@ -1,1 +1,1 @@
-{"body":"{}","pathParameters":{"itemID":"test-mush"},"requestContext":{"identity":{"cognitoIdentityId":"USER-SUB-1234"}}}
+{"pathParameters":{"itemID":"test-mush"},"body":"{}","requestContext":{"identity":{"cognitoIdentityId":"USER-SUB-1234"}}}

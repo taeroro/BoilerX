@@ -4,9 +4,9 @@ let randGen = require("../random-generators.js");
 
 function gen() {
     let args = process.argv.slice(2);
-    if (args[1] == 's') {
-        if (args.length > 2) {
-            gen_success(args[1], arg[2]);
+    if (args[0] == 's') {
+        if (args.length === 2) {
+            gen_success(args[1]);
         }
         else gen_success('false');
     }
@@ -16,10 +16,11 @@ function gen() {
     return;
 }
 
-function gen_success(method, empty) {
+function gen_success(empty) {
     let body = {};
     let filename = '/home/ling/BoilerX/backend-api/mocks/update-user/success';
-    if (empty === empty) {
+
+    if (empty === 'empty') {
         filename += '_with_empty.json';
     }
     else {
@@ -35,7 +36,7 @@ function gen_success(method, empty) {
     };
 
     let output = {
-        pathParameters: JSON.stringify(pathParameters),
+        pathParameters: pathParameters,
         body: JSON.stringify(body),
         requestContext: {
             identity: {
@@ -52,7 +53,7 @@ function gen_success(method, empty) {
     return;
 }
 
-function gen_fail (method, location) {
+function gen_fail (location) {
     let body = {};
     if (location !== 'body') {
         body = {
@@ -63,8 +64,20 @@ function gen_fail (method, location) {
     let id = "USER-SUB-1234";
     if (location === 'id') {
         id = randGen.userID();
+        let invalid_key = {
+            userId: {
+                S: id
+            }
+        };
+        fs.writeFile('/home/ling/BoilerX/backend-api/test/test-profile/test_user_invalid_key.json', JSON.stringify(invalid_key),
+        function(err) {        
+            if (err) throw err;
+        });
     }
     let output = {
+        pathParameters: {
+            userId: id
+        },
         body: JSON.stringify(body),
         requestContext: {
             identity: {

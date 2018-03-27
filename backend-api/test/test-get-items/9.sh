@@ -7,7 +7,7 @@ serverless invoke local -f get_items_price -p ~/BoilerX/backend-api/mocks/search
 
 echo "test 9: get items price (price in range): expect to succeeed"
 grep -o 'valuable' "$outFile" | grep -c 'valuable' > $numFile 
-cat $numFile
+
 if [ $(<$numFile) -eq 2 ]; then
   echo "        success: only items in the range returned"
   else

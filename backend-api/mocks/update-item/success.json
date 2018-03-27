@@ -1,11 +1,1 @@
-{
-    "body":"{\"name\":\"mon22\"}",
-    "pathParameters":{
-        "itemID":"175de6e0-2735-11e8-a353-c9fbb830add1"
-    },
-    "requestContext":{
-        "identity":{
-            "cognitoIdentityId":"USER-SUB-1234"
-        }
-    }
-}
+{"pathParameters":{"itemID":"test-mush"},"body":"{\"name\":\"JjMztH329RBsqTaBC0biKYX4L48aL5qY\",\"sellerName\":\"clothing and shoes\",\"sellerEmail\":null,\"sellerImg\":\"sports\",\"price\":1056.8160774096796,\"descr\":null,\"imageURL\":\"http://OQw83TalzpjtOrfdUm9xFtuQRdimcse7\"}","requestContext":{"identity":{"cognitoIdentityId":"USER-SUB-1234"}}}

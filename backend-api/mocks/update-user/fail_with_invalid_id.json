@@ -1,1 +1,1 @@
-{"body":"{\"username\":null,\"imageURL\":\"http://xhHVK6IFJyvHKpMH0EAaZudmmyZpDO3k\"}","requestContext":{"identity":{"cognitoIdentityId":"13d90610-2007-11e8-b718-2bb16bcb52d9"}}}
+{"pathParameters":{"userId":"d20247f0-31fa-11e8-8b64-af46efe9f14e"},"body":"{\"username\":\"3pAToVVoIGxR3nlhlEx9hUNUwianJsHU\",\"imageURL\":\"http://Ht0tTuCPWo0O7ajkyZnCyLnRAEinUDjW\"}","requestContext":{"identity":{"cognitoIdentityId":"d20247f0-31fa-11e8-8b64-af46efe9f14e"}}}

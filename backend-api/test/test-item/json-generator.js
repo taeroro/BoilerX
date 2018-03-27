@@ -3,14 +3,11 @@ let randGen = require("../random-generators.js");
 
 function gen() {
     let args = process.argv.slice(2);
-    if (args[1] == 's') {
-        if (args.length > 2) {
-            gen_success(args[0], args[2]);
-        }
-        else gen_success(args[0], 'false');
+    if (args[0] == 's') {
+        gen_success(args[1], args[2]);
     }
     else {
-        gen_fail(args[0], args[2]);
+        gen_fail(args[1], args[2]);
     }
     return;
 }
@@ -18,15 +15,17 @@ function gen() {
 function gen_success(method, empty) {
     let body = {};
     let filename = '/home/ling/BoilerX/backend-api/mocks/';
+
     switch (method) {
         case 'post':
             body = {
                 name: randGen.userName(),
-                category: randGen.bool() ? randGen.category() : null,
-                subject: randGen.bool() ? randGen.subject() : null,
+                sellerId: randGen.userID(), 
+                sellerImg: 'http://' + randGen.userName(),
+                sellerName: randGen.category(),
+                sellerEmail: randGen.subject(),
                 price: randGen.price(),
-                crn: randGen.bool() ? randGen.crn : null,
-                descr: randGen.bool() ? randGen.userName(500) : null,
+                descr: randGen.bool() ? randGen.userName(100) : null,
                 tag: randGen.bool() ? randGen.tags() : null,
                 imageURL: randGen.bool() ? 'http://' + randGen.userName() : null
             };
@@ -40,26 +39,26 @@ function gen_success(method, empty) {
             else {
                 body = {
                     name: randGen.bool() ? randGen.userName() : null,
-                    category: randGen.bool() ? randGen.category() : null,
-                    subject: randGen.bool() ? randGen.subject() : null,
+                    sellerName: randGen.bool() ? randGen.category() : null,
+                    sellerEmail: randGen.bool() ? randGen.subject() : null,
+                    sellerImg: randGen.bool() ? randGen.category() : null,
                     price: randGen.bool() ? randGen.price() : null,
-                    crn: randGen.bool() ? randGen.crn : null,
-                    descr: randGen.bool() ? randGen.userName(500) : null,
-                    tag: randGen.bool() ? randGen.tags() : null,
+                    descr: randGen.bool() ? randGen.userName(100) : null,
                     imageURL: randGen.bool() ? 'http://' + randGen.userName() : null
                 };
+                filename += 'update-item/success.json';
             }
-            filename += 'update-item/success.json';
+            
             break;
-        case 'delete':
+        default:
             break;
     }
     
     let output = {
-        body: JSON.stringify(body),
         pathParameters: {
             itemID: 'test-mush'
         },
+        body: JSON.stringify(body),
         requestContext: {
             identity: {
                 cognitoIdentityId: "USER-SUB-1234"
@@ -79,11 +78,20 @@ function gen_fail (method, location) {
     let body = {};
     let filename = '/home/ling/BoilerX/backend-api/mocks/';
     let id = 'test-mush';
-    if (location === 'id' || method === 'delete') {
+    if (location === 'id') {
         id = randGen.userID();
-        filename += 'update-item/fail_with_invalid_id.json'
+        filename += 'update-item/fail_with_invalid_id.json';
+        let invalid_key = {
+            userId: {
+                S: id
+            }
+        };
+        fs.writeFile('/home/ling/BoilerX/backend-api/test/test-item/test_item_invalid_key.json', JSON.stringify(invalid_key),
+        function(err) {        
+            if (err) throw err;
+        });
     }
-    if (method === 'post') {
+    else if (method === 'post') {
         body = {
             name: randGen.userName(),
             category: randGen.bool() ? randGen.category() : null,
@@ -125,37 +133,23 @@ function gen_fail (method, location) {
     }
 
     else {
-        filename += 'update_item/fail_with_invalid_body.json';
-        let body = {
+        filename += 'update-item/fail_with_invalid_body.json';
+        body = {
             name: randGen.bool() ? randGen.userName() : null,
             category: randGen.bool() ? randGen.category() : null,
             subject: randGen.bool() ? randGen.subject() : null,
-            price: randGen.bool() ? randGen.price() : null,
-            crn: randGen.bool() ? randGen.crn : null,
+            price: randGen.userName(2),
             descr: randGen.bool() ? randGen.userName(500) : null,
-            tag: randGen.bool() ? randGen.tags() : null,
             imageURL: randGen.bool() ? 'http://' + randGen.userName() : null
         };
-        if (location === 'body') {
-            switch (randGen.index(2)) {
-                case 0:
-                    body.price = randGen.userName(2);
-                    break;
-                case 1:
-                    body.crn = randGen.userName(5);
-                    break;
-                default:
-                    console.log('random generator index not function correctly')
-            }
-        }
     }
     
     
     let output = {
-        body: JSON.stringify(body),
         pathParameters: {
             itemID: id
         },
+        body: JSON.stringify(body),
         requestContext: {
             identity: {
                 cognitoIdentityId: "USER-SUB-1234"

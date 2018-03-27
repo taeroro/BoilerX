@@ -1,0 +1,10 @@
+{
+    "itemID":{"S": "test-mush"},
+    "name":{"S": "test-item"},
+    "price":{"N": "3000"},
+    "sellerId": {"S": "test-item"},
+    "sellerName": {"S": "test-item"},
+    "sellerEmail": {"S": "test-item"},
+    "sellerImg": {"S": "test-item"},
+    "popularity": {"N": "300"}
+}
