@@ -7,8 +7,8 @@ serverless invoke local -f get_items -p ~/BoilerX/backend-api/mocks/search-items
 
 echo "test 2: get items for homepage: expect to succeeed"
 grep -o 'popularity' "$outFile" | grep -c 'popularity' > $numFile 
-if [ $(<$numFile) -eq 5 ]; then
-  echo "        success: 5 items get for homepage"
+if [ $(<$numFile) -eq 2 ]; then
+  echo "        success: 2 items get for homepage"
   else
     echo "      failure: incorrect number of items for homepage"
 fi

@@ -12,15 +12,15 @@ if grep -q '\"statusCode\": 200,' "$outFile"; then
   pop1=$(awk '$1 ~ /[:digit:]/{i++}i==1' $numFile | grep -o [[:digit:]])
 
   pop2=$(awk '$1 ~ /[:digit:]/{i++}i==2' $numFile | grep -o [[:digit:]])
-  pop3=$(awk '$1 ~ /[:digit:]/{i++}i==3' $numFile | grep -o [[:digit:]])
+  
   rm $numFile
-  if [ $pop1 -ge $pop2 ] && [ $pop2 -ge $pop3 ]; then
+  if [ $pop1 -ge $pop2 ]; then
     echo "        success: items returned in popularity order"
   else
     echo "      failure: items returned in wrong order"
   fi
 else 
-  echo "      failure: no items got"
+  echo "      failure: error in getting items"
 fi
 
 rm $outFile
