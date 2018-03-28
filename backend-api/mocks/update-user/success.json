@@ -1,1 +1,1 @@
-{"body":"{\"username\":\"IpUMA8FS3SMLH64DzsQZLh9RKsYtGAUb\",\"imageURL\":\"http://yWB9ym9yM2bvvrEJLiFpf3oCIutXVGi6\"}","requestContext":{"identity":{"cognitoIdentityId":"USER-SUB-1234"}}}
+{"pathParameters":{"userId":"USER-SUB-1234"},"body":"{\"username\":null,\"imageURL\":null}","requestContext":{"identity":{"cognitoIdentityId":"USER-SUB-1234"}}}

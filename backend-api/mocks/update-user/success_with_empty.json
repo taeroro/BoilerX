@@ -1,1 +1,1 @@
-{"body":"{}","requestContext":{"identity":{"cognitoIdentityId":"USER-SUB-1234"}}}
+{"pathParameters":{"userId":"USER-SUB-1234"},"body":"{}","requestContext":{"identity":{"cognitoIdentityId":"USER-SUB-1234"}}}
